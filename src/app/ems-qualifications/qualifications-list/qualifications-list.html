@@ -1,1 +1,22 @@
-<p>qualifications-list works!</p>
+<div class="qualifications-list-container">
+	<table class="qualifications-list-table">
+		<thead class="qualifications-list-thead">
+			<tr class="qualifications-list-header-row">
+				<th class="qualifications-list-header qualifications-list-header--bezeichnung">Bezeichnung</th>
+				<th class="qualifications-list-header qualifications-list-header--beschreibung">Beschreibung</th>
+				<th class="qualifications-list-header qualifications-list-header--aktionen">Aktionen</th>
+			</tr>
+		</thead>
+		<tbody class="qualifications-list-tbody">
+			@for (item of [1,2,3,4,5,6,7,8,9,10]; track item) {
+				<tr class="qualifications-list-row">
+					<td class="qualifications-list-cell qualifications-list-cell--bezeichnung">Bezeichnung {{item}}</td>
+					<td class="qualifications-list-cell qualifications-list-cell--beschreibung">Beschreibung für {{item}}</td>
+					<td class="qualifications-list-cell qualifications-list-cell--aktionen">
+						<button class="qualifications-list-action-btn">Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
