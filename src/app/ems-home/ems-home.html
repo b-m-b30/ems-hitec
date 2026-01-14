@@ -26,7 +26,7 @@
 			<button class="eh-sidebar-btn" (click)="onMitarbeiterClick()">
 				<span style="font-size:1.2em;">🧑‍💼</span> Mitarbeiter
 			</button>
-			<button class="eh-sidebar-btn" (click)="onQualifikationenClick()">
+			<button class="eh-sidebar-btn" (click)="onQualificationsClick()">
 				<span style="font-size:1.2em;">🎓</span> Qualifikationen
 			</button>
 			<button class="eh-sidebar-btn" (click)="onZuweisenClick()">
@@ -35,11 +35,19 @@
 		</nav>
 		<section class="eh-content">
 			<!-- Main content area (empty for now) -->
+            <!-- Load correct screen on select i.e. onQualificationsClick() -->
+            @if (selectedScreen() === 'home') {
+
+            } @else if (selectedScreen() === 'employees') {
+
+            } @else if (selectedScreen() === 'qualifications') {
+                <app-ems-qualifications></app-ems-qualifications>
+            }
 		</section>
 	</main>
 
 	<!-- Footer -->
 	<footer class="eh-footer">
-		© 2025 EMS HiTec GmbH. All rights reserved.
+		© {{ currentYear }} EMS HiTec GmbH. All rights reserved.
 	</footer>
 </div>
