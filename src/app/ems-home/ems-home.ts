@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-ems-home',
@@ -7,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './ems-home.css',
 })
 export class EmsHome {
-
+  @Input({ required: true }) onLogout!: () => void;
+  onLogoClick() {}
+  onLogoutClick() { this.onLogout(); }
+  onProfileClick() {}
+  onMitarbeiterClick() {}
+  onQualifikationenClick() {}
+  onZuweisenClick() {}
 }

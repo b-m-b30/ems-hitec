@@ -1,2 +1,5 @@
-<router-outlet></router-outlet>
-<ems-login></ems-login>
+@if (isLoggedIn()) {
+	<app-ems-home [onLogout]="onLogout"></app-ems-home>
+} @else {
+	<ems-login [onLogin]="onLogin"></ems-login>
+}
