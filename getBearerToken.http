@@ -1,0 +1,26 @@
+# Um ein gültiges App-Passwort für john zu generieren:
+# 1. Melden Sie sich als Administrator unter localhost:9000 (a@b.com / secret)
+# 2. Auf der Kachel employee_api -> more Details --> edit
+# 3. Links auf Directory --> Token and App Passwords
+# 4. Klicken Sie auf "Create", wählen Sie einen Namen, wählen Sie john aus, wählen Sie App Password, deaktiviere expire klicken Sie auf "Create"
+# 5. Kopieren Sie das generierte App-Passwort und verwenden Sie es im folgenden Befehl, um ein Bearer-Token zu erhalten.
+@app_password=WMl2FdS2YHL5GafvMZMFWVlTfgV4Dx3eNgctk5tvbi5hxBG7LK2A0CDtO6uD
+###
+POST http://localhost:9000/application/o/token/
+Content-Type: application/x-www-form-urlencoded
+
+grant_type = password &
+username = john &
+password = {{app_password}} &
+client_id = employee_api_client
+
+###
+
+
+
+
+@bearer_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjYwMWEyNGE4ZDc1M2Q0ZTI2YmQ4MjIyNDBjMDIxMTk1IiwidHlwIjoiSldUIn0.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjkwMDAvYXBwbGljYXRpb24vby9lbXBsb3llZV9hcGkvIiwic3ViIjoiNzFiNGY2ZjgzMDlkZTM1OTZiNTAxMjVkNTdhZjllYzJmYjUyYWE0NjU1ZDEyZjMwYjVjY2FlZTQwZjQ3MzA4ZiIsImF1ZCI6ImVtcGxveWVlX2FwaV9jbGllbnQiLCJleHAiOjE3Njg0MDE1NjksImlhdCI6MTc2ODM5ODU2OSwiYXV0aF90aW1lIjoxNzY4Mzk4NTY5LCJhY3IiOiJnb2F1dGhlbnRpay5pby9wcm92aWRlcnMvb2F1dGgyL2RlZmF1bHQiLCJhenAiOiJlbXBsb3llZV9hcGlfY2xpZW50IiwidWlkIjoiWlJFZ0JzclBBVGxzWnBMR3VkZkdJVnVNRU8yMHo5dzZMdHl5TlM5cyJ9.DbR4aVozyex1TSUgoHm4ZQXZACcqBos88NjlGhjwTZQU4oobdUur408wg3x6Th2Sfo7DxvcVow-wiuLtRTEwrOhV6hZ20Tx9U0TfHxyP_C1J__4GO-pUPABMlrUb2XKSfV5ryy0UprZTI6yOI_21wo6degYeh9rod2RB5by59ZBtjueuv2mJYfy2RsmZvYL8JjRvwzrYl_WCBG_cZHdkVV7BS75fMZOK0wEhaDupw7ALFzqk5QjAbP1B6rq2pkSi7VwtZD35DbVHQY5-6knDbB-35zS5N6cs7k_rwWWeqclnpREsQJR0gjhscULL4KggF_SIwDOolzk58voRt5imUTkUH9Gka5QIDcWnfzdOvsgIEA8gF-g86HKSIu-gENwz629XB6d7JK5gd9QEIivxKMTrvA6YyuEbqy9Y8Icq2-Msb2N5LI9BcVHtYXmiX7mOBeyGcmt37U-WbtubagL6VITeVNtNdaVbw8VO5dj2bXJGcK1lu5REDC8h2V965SLz8_74-2E63Q4DOPYqt49hHgfi_xIORqgRqqTW53m_LK1EnP4RZ6Uo1YG4I3X7wxRNi8bmgpovFXU92bfPXUOa8FFFasyT7RRCW6P0D_wgzm3DoTerRraCrw0lCVje0cJia9Zd3E2fJAKRLNoqANe2APK2P8yDozxeawDoSstkLuo
+
+### Bearer Token
+GET http://localhost:8089/employees
+Authorization: Bearer {{bearer_token}}
