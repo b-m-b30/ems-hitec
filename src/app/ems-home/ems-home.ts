@@ -10,13 +10,18 @@ import { EmsQualifications } from "../ems-qualifications/ems-qualifications";
 export class EmsHome {
   selectedScreen: WritableSignal<string> = signal<string>('home');
   @Input({ required: true }) onLogout!: () => void;
+  
   onLogoClick() {}
-  onLogoutClick() { this.onLogout(); }
+  onLogoutClick() { 
+    this.onLogout(); 
+    localStorage.setItem('access_token', '');
+  }
   onProfileClick() {}
   onMitarbeiterClick() {}
   onQualificationsClick() {this.selectedScreen.set('qualifications');}
   onZuweisenClick() {}
-    get currentYear(): number {
-      return new Date().getFullYear();
-    }
+
+  get currentYear(): number {
+    return new Date().getFullYear();
+  }
 }

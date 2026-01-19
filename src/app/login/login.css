@@ -68,6 +68,23 @@
   cursor: not-allowed;
 }
 
+.login-btn-alt {
+  width: 100%;
+  background: #fff;
+  color: #6C73F5;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid #6C73F5;
+  border-radius: 8px;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(60, 60, 60, 0.08);
+}
+.login-btn-alt:hover {
+  background: #f5f5ff;
+}
+
 .login-demo {
   color: #888;
   font-size: 0.95rem;
