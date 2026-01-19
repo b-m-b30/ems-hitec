@@ -8,10 +8,10 @@
 			</tr>
 		</thead>
 		<tbody class="qualifications-list-tbody">
-			@for (item of [1,2,3,4,5,6,7,8,9,10]; track item) {
+			@for (quali of qualifications(); track quali.id) {
 				<tr class="qualifications-list-row">
-					<td class="qualifications-list-cell qualifications-list-cell--bezeichnung">Bezeichnung {{item}}</td>
-					<td class="qualifications-list-cell qualifications-list-cell--beschreibung">Beschreibung für {{item}}</td>
+					<td class="qualifications-list-cell qualifications-list-cell--bezeichnung">Bezeichnung {{quali.skill}}</td>
+					<td class="qualifications-list-cell qualifications-list-cell--beschreibung">Beschreibung für {{quali.skill}}</td>
 					<td class="qualifications-list-cell qualifications-list-cell--aktionen">
 						<button class="qualifications-list-action-btn">Delete</button>
 					</td>
