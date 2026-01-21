@@ -1,0 +1,12 @@
+h1 {
+  margin: 32px 64px;
+  font-family: Archivo; /* Heading */
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 700;
+  color: #171A1FFF; /* neutral-900 */
+}
+
+.qualifications-filter {
+  margin: 24px 64px;
+}

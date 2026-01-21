@@ -15,7 +15,7 @@
 				<span style="font-size:1.1em;">⎋</span> Logout
 			</button>
 			<span class="eh-header-profile" (click)="onProfileClick()">
-				<img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" width="28" height="28" />
+				<img ngSrc="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" width="28" height="28" />
 			</span>
 		</div>
 	</header>
@@ -37,9 +37,8 @@
 			<!-- Main content area (empty for now) -->
             <!-- Load correct screen on select i.e. onQualificationsClick() -->
             @if (selectedScreen() === 'home') {
-
             } @else if (selectedScreen() === 'employees') {
-
+                <app-ems-employees></app-ems-employees>
             } @else if (selectedScreen() === 'qualifications') {
                 <app-ems-qualifications></app-ems-qualifications>
             }

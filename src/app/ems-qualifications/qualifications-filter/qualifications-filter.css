@@ -1,54 +1,54 @@
 /* Textbox */
 .textbox {
-  position: relative; 
+  position: relative;
   display: inline-block;
-  opacity: 1; 
+  opacity: 1;
 }
 .textbox input {
-  width: 831px; 
-  height: 40px; 
-  padding-left: 34px; 
-  padding-right: 12px; 
-  font-family: Inter; 
-  font-size: 14px; 
-  line-height: 22px; 
-  font-weight: 400; 
+  width: 831px;
+  height: 40px;
+  padding-left: 34px;
+  padding-right: 12px;
+  font-family: Inter;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
   background: #FFFFFFFF; /* white */
-  border-radius: 6px; 
-  border-width: 1px; 
+  border-radius: 6px;
+  border-width: 1px;
   border-color: #DEE1E6FF; /* neutral-300 */
-  border-style: solid; 
-  outline: none; 
+  border-style: solid;
+  outline: none;
 }
 .textbox svg {
-  position: absolute; 
-  top: 12px; 
-  right: 12px; 
-  width: 16px; 
-  height: 16px; 
-  fill: #565D6DFF; 
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  fill: #565D6DFF;
 }
 .textbox svg.left {
-  left: 12px; 
+  left: 12px;
 }
 /* hover */
 .textbox input:hover {
-  color: #565D6DFF; 
+  color: #565D6DFF;
   background: #FFFFFFFF; /* white */
   border-color: #DEE1E6FF; /* neutral-300 */
 }
 /* focused */
-.textbox input:focused {
-  color: #565D6DFF; 
+.textbox input:focus {
+  color: #565D6DFF;
   background: #FFFFFFFF; /* white */
   border-color: #DEE1E6FF; /* neutral-300 */
 }
 /* disabled */
 .textbox input:disabled {
-  color: #565D6DFF; 
+  color: #565D6DFF;
   background: #FFFFFFFF; /* white */
   border-color: #DEE1E6FF; /* neutral-300 */
 }
 .textbox :disabled + .icon, .textbox :disabled + .icon + .icon {
-  fill: #565D6DFF; 
+  fill: #565D6DFF;
 }
