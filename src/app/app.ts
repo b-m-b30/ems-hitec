@@ -1,24 +1,12 @@
-
-
 import { Component, signal } from '@angular/core';
-import { EmsHome } from './ems-home/ems-home';
-import { LoginComponent } from './login/login';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [EmsHome, LoginComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('ems-hitec');
-  protected readonly isLoggedIn = signal(false);
-
-  onLogin = () => {
-    this.isLoggedIn.set(true);
-  };
-
-  onLogout = () => {
-    this.isLoggedIn.set(false);
-  };
 }

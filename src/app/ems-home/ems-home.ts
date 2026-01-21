@@ -1,26 +1,22 @@
-import { Component, Input, signal, WritableSignal } from '@angular/core';
-import { EmsQualifications } from "../ems-qualifications/ems-qualifications";
-import {EmsEmployees} from '../ems-employees/ems-employees';
-import {NgOptimizedImage} from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { Auth } from '../auth/auth';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-ems-home',
-  imports: [EmsQualifications, EmsEmployees, NgOptimizedImage],
+  imports: [RouterOutlet],
   templateUrl: './ems-home.html',
   styleUrl: './ems-home.css',
 })
 export class EmsHome {
-  selectedScreen: WritableSignal<string> = signal<string>('home');
-  @Input({ required: true }) onLogout!: () => void;
+  private readonly auth = inject(Auth);
+  private readonly router = inject(Router);
 
-  onLogoClick() {}
-  onLogoutClick() {
-    this.onLogout();
-    localStorage.setItem('access_token', '');
-  }
+  onLogoClick() {this.router.navigateByUrl('/home')}
+  onLogoutClick() {this.auth.logout()}
   onProfileClick() {}
-  onMitarbeiterClick() {this.selectedScreen.set('employees');}
-  onQualificationsClick() {this.selectedScreen.set('qualifications');}
+  onMitarbeiterClick() {this.router.navigateByUrl('/employees'}
+  onQualificationsClick() {this.router.navigateByUrl('/qualifications')}
   onZuweisenClick() {}
 
   get currentYear(): number {
