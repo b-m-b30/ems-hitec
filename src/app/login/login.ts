@@ -28,7 +28,7 @@ export class LoginComponent {
 
   onSignIn(): void {
     this.isLoading.set(true);
-    this.authService.createToken('john', '3C5djMjzgDESVSogSYeLJzax88Oss1fAQGlJY0eTQ7z9FfTzFZf8SfkuCDAu').subscribe({
+    this.authService.createToken('john', 'ZIKP24RzyA6ENvbpqVPc3W5RRQFBKgykylZuRXu8jIv1tXXnT2x38Oltldqq').subscribe({
       next: () => {
         this.isLoading.set(false);
         this.router.navigateByUrl('/home');

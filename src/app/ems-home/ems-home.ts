@@ -15,7 +15,7 @@ export class EmsHome {
   onLogoClick() {this.router.navigateByUrl('/home')}
   onLogoutClick() {this.auth.logout()}
   onProfileClick() {}
-  onMitarbeiterClick() {this.router.navigateByUrl('/employees'}
+  onMitarbeiterClick() {this.router.navigateByUrl('/employees')}
   onQualificationsClick() {this.router.navigateByUrl('/qualifications')}
   onZuweisenClick() {}
 
