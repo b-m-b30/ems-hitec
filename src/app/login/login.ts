@@ -2,7 +2,9 @@
 import { ChangeDetectionStrategy, Component, inject, Input, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../auth/auth';
+import { Router } from '@angular/router';
 
+//TODO: error messages (Docker down, Authentik, etc.)
 @Component({
   selector: 'ems-login',
   imports: [ReactiveFormsModule],
@@ -13,6 +15,7 @@ import { Auth } from '../auth/auth';
 export class LoginComponent {
   private readonly authService = inject(Auth);
   private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
 
   usernameLogin = signal(false);
 
@@ -21,7 +24,6 @@ export class LoginComponent {
     password: ['', Validators.required],
   });
 
-  @Input({ required: true }) onLogin!: () => void;
   protected readonly isLoading = signal(false);
 
   onSignIn(): void {
@@ -29,7 +31,7 @@ export class LoginComponent {
     this.authService.createToken('john', '3C5djMjzgDESVSogSYeLJzax88Oss1fAQGlJY0eTQ7z9FfTzFZf8SfkuCDAu').subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.onLogin();
+        this.router.navigateByUrl('/home');
       },
       error: () => {
         this.isLoading.set(false);
@@ -48,7 +50,7 @@ export class LoginComponent {
     this.authService.createToken(username!, password!).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.onLogin();
+        this.router.navigateByUrl('/home');
       },
       error: () => {
         this.isLoading.set(false);

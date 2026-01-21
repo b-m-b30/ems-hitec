@@ -34,15 +34,7 @@
 			</button>
 		</nav>
 		<section class="eh-content">
-			<!-- Main content area (empty for now) -->
-            <!-- Load correct screen on select i.e. onQualificationsClick() -->
-            @if (selectedScreen() === 'home') {
-
-            } @else if (selectedScreen() === 'employees') {
-
-            } @else if (selectedScreen() === 'qualifications') {
-                <app-ems-qualifications></app-ems-qualifications>
-            }
+			<router-outlet />
 		</section>
 	</main>
 

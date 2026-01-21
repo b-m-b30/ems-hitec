@@ -1,24 +1,22 @@
-import { Component, Input, signal, WritableSignal } from '@angular/core';
-import { EmsQualifications } from "../ems-qualifications/ems-qualifications";
+import { Component, inject } from '@angular/core';
+import { Auth } from '../auth/auth';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-ems-home',
-  imports: [EmsQualifications],
+  imports: [RouterOutlet],
   templateUrl: './ems-home.html',
   styleUrl: './ems-home.css',
 })
 export class EmsHome {
-  selectedScreen: WritableSignal<string> = signal<string>('home');
-  @Input({ required: true }) onLogout!: () => void;
+  private readonly auth = inject(Auth);
+  private readonly router = inject(Router);
   
-  onLogoClick() {}
-  onLogoutClick() { 
-    this.onLogout(); 
-    localStorage.setItem('access_token', '');
-  }
+  onLogoClick() {this.router.navigateByUrl('/home')}
+  onLogoutClick() {this.auth.logout()}
   onProfileClick() {}
   onMitarbeiterClick() {}
-  onQualificationsClick() {this.selectedScreen.set('qualifications');}
+  onQualificationsClick() {this.router.navigateByUrl('/qualifications')}
   onZuweisenClick() {}
 
   get currentYear(): number {

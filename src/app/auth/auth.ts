@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import {Router} from '@angular/router'
 import { Observable, tap } from 'rxjs';
 
 interface TokenResponse {
@@ -13,9 +14,12 @@ interface TokenResponse {
   providedIn: 'root',
 })
 export class Auth {
+  private readonly router = inject(Router);
   private readonly http = inject(HttpClient);
   private readonly tokenUrl = 'http://localhost:9000/application/o/token/';
   private readonly clientId = 'employee_api_client';
+
+  readonly isAuthenticated = signal(!!localStorage.getItem('access_token'));
 
   createToken(username: string, password: string): Observable<TokenResponse> {
     const body = new URLSearchParams();
@@ -33,12 +37,19 @@ export class Auth {
       .pipe(
         tap((response) => {
           this.setToken(response.access_token);
+          this.isAuthenticated.set(true);
         })
       );
   }
 
   setToken(token: string): void {
     localStorage.setItem('access_token', token);
+  }
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    this.isAuthenticated.set(false);
+    this.router.navigateByUrl('/login');
   }
 
   refreshToken(): void {
