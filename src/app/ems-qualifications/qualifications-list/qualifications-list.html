@@ -2,6 +2,7 @@
 	<table class="qualifications-list-table">
 		<thead class="qualifications-list-thead">
 			<tr class="qualifications-list-header-row">
+				<th class="qualifications-list-header qualifications-list-header--select"></th>
 				<th class="qualifications-list-header qualifications-list-header--bezeichnung">Bezeichnung</th>
 				<th class="qualifications-list-header qualifications-list-header--beschreibung">Beschreibung</th>
 				<th class="qualifications-list-header qualifications-list-header--aktionen">Aktionen</th>
@@ -10,6 +11,9 @@
 		<tbody class="qualifications-list-tbody">
 			@for (quali of qualifications(); track quali.id) {
 				<tr class="qualifications-list-row">
+					<td class="qualifications-list-cell qualifications-list-cell--select">
+						<input type="checkbox" (change)="onSelectChange($event, quali.id)">
+					</td>
 					<td class="qualifications-list-cell qualifications-list-cell--bezeichnung">Bezeichnung {{quali.skill}}</td>
 					<td class="qualifications-list-cell qualifications-list-cell--beschreibung">Beschreibung für {{quali.skill}}</td>
 					<td class="qualifications-list-cell qualifications-list-cell--aktionen">

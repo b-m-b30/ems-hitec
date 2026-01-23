@@ -1,7 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, EMPTY, interval, startWith, switchMap } from 'rxjs';
-import { QualificationGetDTO, QualificationsService } from '../qualifications-service';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { QualificationsStore } from '../qualifications-store';
 
 @Component({
@@ -12,15 +9,23 @@ import { QualificationsStore } from '../qualifications-store';
 })
 export class QualificationsList implements OnInit {
   private readonly qualificationStore = inject(QualificationsStore);
-  private readonly destroyRef = inject(DestroyRef);
 
-  qualifications = this.qualificationStore.qualifications;
+  qualifications = this.qualificationStore.filteredQualifications;
   errorMessage = this.qualificationStore.error;
-
-  private readonly REFRESH_INTERVAL_MS = 30000;
+  selectedQualifications = this.qualificationStore.selectedQualifications;
 
   ngOnInit(): void {
     this.qualificationStore.startPoll();
+  }
+
+  onSelectChange(event: Event, id: number): void {
+    const checkbox = event.target as HTMLInputElement;
+
+    if (checkbox.checked) {
+      this.qualificationStore.selectQualification(id);
+    } else {
+      this.qualificationStore.deselectQualification(id);
+    }
   }
 
   onClickDelete(id: number): void {

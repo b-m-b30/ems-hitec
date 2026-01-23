@@ -8,16 +8,30 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   providedIn: 'root',
 })
 export class QualificationsStore {
-
   private readonly _qualifications = signal<QualificationGetDTO[]>([]);
   private readonly _loading = signal<boolean>(false);
   private readonly _error = signal<string | null>(null);
+  private readonly _filterText = signal<string>('');
+  private readonly _selectedQualifications = signal<Set<number>>(new Set<number>())
 
   readonly qualifications = this._qualifications.asReadonly();
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
+  readonly filterText = this._filterText.asReadonly();
+  readonly selectedQualifications = this._selectedQualifications.asReadonly();
+
+  readonly filteredQualifications = computed(() => {
+    const filter = this._filterText().toLowerCase().trim();
+    if (!filter) {
+      return this._qualifications();
+    }
+    return this._qualifications().filter(q =>
+      q.skill.toLowerCase().includes(filter)
+    );
+  });
 
   readonly count = computed(() => this._qualifications().length);
+  readonly filteredCount = computed(() => this.filteredQualifications().length);
 
   private readonly api = inject(QualificationsService);
   private readonly destroyref = inject(DestroyRef);
@@ -60,12 +74,15 @@ export class QualificationsStore {
     this._loading.set(true);
 
     this.api.create(dto).subscribe({
-      next: () => this.load(),
+      next: newQualification => {
+        this._qualifications.update(qualifications => [...qualifications, newQualification]);
+        this._loading.set(false);
+      },
       error: err => {
         console.error(err);
         this._error.set('Fehler beim Erstellen der Qualifikation.');
-      },
-      complete: () => this._loading.set(false),
+        this._loading.set(false);
+      }
     })
   }
 
@@ -73,24 +90,54 @@ export class QualificationsStore {
     this._loading.set(true);
 
     this.api.update(id, dto).subscribe({
-      next: () => this.load(),
+      next: updatedQualification => {
+        this._qualifications.update(qualifications =>
+          qualifications.map(q => q.id === id ? updatedQualification : q)
+        );
+        this._loading.set(false);
+      },
       error: err => {
         console.error(err);
         this._error.set('Fehler beim Aktualisieren der Qualifikation.');
-      },
-      complete: () => this._loading.set(false),
+        this._loading.set(false);
+      }
     })
+  }
+
+  setFilter(text: string): void {
+    this._filterText.set(text);
+  }
+
+  clearFilter(): void {
+    this._filterText.set('');
   }
 
   delete(id: number): void {
     this._loading.set(true);
 
     this.api.delete(id).subscribe({
-      next: () => this.load(),
+      next: () => {
+        this._qualifications.update(qualifications =>
+          qualifications.filter(q => q.id !== id)
+        );
+        this._loading.set(false);
+      },
       error: err => {
         console.error(err);
         this._error.set('Fehler beim Löschen der Qualifikation.');
+        this._loading.set(false);
       }
     })
+  }
+
+  selectQualification(id: number): void {
+    this._selectedQualifications.update(set => set.add(id));
+  }
+
+  deselectQualification(id: number): void {
+    this._selectedQualifications.update(set => {
+      set.delete(id);
+      return set;
+    });
   }
 }
