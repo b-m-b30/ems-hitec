@@ -1,7 +1,5 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, interval, startWith, switchMap } from 'rxjs';
-import { QualificationGetDTO, QualificationsService } from '../qualifications-service';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { QualificationsStore } from '../qualifications-store';
 
 @Component({
   selector: 'app-qualifications-list',
@@ -10,27 +8,27 @@ import { QualificationGetDTO, QualificationsService } from '../qualifications-se
   styleUrl: './qualifications-list.css',
 })
 export class QualificationsList implements OnInit {
-  private readonly qualificationsService = inject(QualificationsService);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly qualificationStore = inject(QualificationsStore);
 
-  qualifications = signal<QualificationGetDTO[]>([]);
-
-  private readonly REFRESH_INTERVAL_MS = 30000;
+  qualifications = this.qualificationStore.filteredQualifications;
+  errorMessage = this.qualificationStore.error;
+  selectedQualifications = this.qualificationStore.selectedQualifications;
 
   ngOnInit(): void {
-    console.log(localStorage.getItem('access_token'));
+    this.qualificationStore.startPoll();
+  }
 
-    interval(this.REFRESH_INTERVAL_MS)
-      .pipe(
-        startWith(0),
-        switchMap(() => {
-          console.log('Polling qualifications...');
-          return this.qualificationsService.getAll();
-        }),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe((data) => {
-        this.qualifications.set(data);
-      });
+  onSelectChange(event: Event, id: number): void {
+    const checkbox = event.target as HTMLInputElement;
+
+    if (checkbox.checked) {
+      this.qualificationStore.selectQualification(id);
+    } else {
+      this.qualificationStore.deselectQualification(id);
+    }
+  }
+
+  onClickDelete(id: number): void {
+    this.qualificationStore.delete(id);
   }
 }

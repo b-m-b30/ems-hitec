@@ -1,3 +1,10 @@
 <h1>Qualifikationen Übersicht</h1>
 <app-qualifications-filter class="qualifications-filter"></app-qualifications-filter>
 <app-qualifications-list></app-qualifications-list>
+<button (click)="onDeleteSelected()" class="selection-delete-button">
+    Ausgewählte Qualifikationen löschen
+</button>
+<form [formGroup]="qualificationForm" (ngSubmit)="onAddQualification()">
+    <input type="text" placeholder="Neue Qualifikation eingeben" formControlName="skill">
+    <button type="submit" [disabled]="qualificationForm.invalid">Hinzufügen</button>
+</form>

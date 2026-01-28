@@ -1,12 +1,126 @@
+:host {
+    display: block;
+    padding: 32px 64px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
 h1 {
-    margin: 32px 64px;
-    font-family: Archivo; /* Heading */
-    font-size: 30px; 
-    line-height: 36px; 
-    font-weight: 700; 
-    color: #171A1FFF; /* neutral-900 */
+    margin: 0 0 32px 0;
+    font-family: Archivo, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 700;
+    color: #171A1F;
+    letter-spacing: -0.5px;
 }
 
 .qualifications-filter {
-    margin: 24px 64px;
+    margin-bottom: 24px;
+}
+
+form {
+    margin-top: 32px;
+    padding: 24px;
+    background: #FFFFFF;
+    border: 1px solid #DEE1E6;
+    border-radius: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease;
+}
+
+form:focus-within {
+    box-shadow: 0 4px 12px rgba(108, 115, 245, 0.1);
+    border-color: #6C73F5;
+}
+
+form input[type="text"] {
+    flex: 1;
+    height: 44px;
+    padding: 0 16px;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #171A1F;
+    background: #F8F9FA;
+    border: 1px solid #DEE1E6;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+form input[type="text"]::placeholder {
+    color: #9095A1;
+}
+
+form input[type="text"]:hover {
+    background: #FFFFFF;
+    border-color: #BCC1CA;
+}
+
+form input[type="text"]:focus {
+    background: #FFFFFF;
+    border-color: #6C73F5;
+    box-shadow: 0 0 0 3px rgba(108, 115, 245, 0.1);
+}
+
+form button[type="submit"] {
+    height: 44px;
+    padding: 0 24px;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #6C73F5 0%, #5A62E8 100%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(108, 115, 245, 0.25);
+    white-space: nowrap;
+}
+
+form button[type="submit"]:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(108, 115, 245, 0.35);
+    background: linear-gradient(135deg, #5A62E8 0%, #4F56D6 100%);
+}
+
+form button[type="submit"]:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(108, 115, 245, 0.3);
+}
+
+form button[type="submit"]:disabled {
+    background: #DEE1E6;
+    color: #9095A1;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.selection-delete-button {
+    margin-top: 16px;
+    padding: 10px 20px;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #FF5C5C 0%, #E84545 100%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(255, 92, 92, 0.25);
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.selection-delete-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 92, 92, 0.35);
+    background: linear-gradient(135deg, #E84545 0%, #D73737 100%);
 }
