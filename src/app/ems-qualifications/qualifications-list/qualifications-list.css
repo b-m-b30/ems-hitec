@@ -1,9 +1,35 @@
+:host {
+    display: block;
+    margin-top: 24px;
+}
+
 .qualifications-list-container {
-    max-height: 400px;
+    max-height: 600px;
     overflow-y: auto;
-    border-radius: 8px;
-    border: 1px solid #ececec;
-    background: #fff;
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #DEE1E6;
+    background: #FFFFFF;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.qualifications-list-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.qualifications-list-container::-webkit-scrollbar-track {
+    background: #F8F9FA;
+    border-radius: 4px;
+}
+
+.qualifications-list-container::-webkit-scrollbar-thumb {
+    background: #BCC1CA;
+    border-radius: 4px;
+}
+
+.qualifications-list-container::-webkit-scrollbar-thumb:hover {
+    background: #9095A1;
 }
 
 .qualifications-list-table {
@@ -15,52 +41,99 @@
 .qualifications-list-thead {
     position: sticky;
     top: 0;
-    background: #f7f8f9;
-    z-index: 1;
+    background: #F8F9FA;
+    z-index: 10;
+    box-shadow: 0 1px 0 #DEE1E6;
 }
-
-.qualifications-list-header-row {}
 
 .qualifications-list-header {
     text-align: left;
-    padding: 12px 16px;
+    padding: 16px 20px;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
     font-weight: 700;
-    color: #171A1F;
-    background: #f7f8f9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #565D6D;
+    background: #F8F9FA;
 }
-.qualifications-list-header--bezeichnung {}
-.qualifications-list-header--beschreibung {}
-.qualifications-list-header--aktionen {}
 
-.qualifications-list-tbody {}
+.qualifications-list-tbody {
+    background: #FFFFFF;
+}
 
-.qualifications-list-row {}
+.qualifications-list-row {
+    transition: background-color 0.15s ease;
+}
+
+.qualifications-list-row:hover {
+    background-color: #F8F9FA;
+}
+
+.qualifications-list-row:last-child .qualifications-list-cell {
+    border-bottom: none;
+}
 
 .qualifications-list-cell {
-    padding: 10px 16px;
-    background: #fff;
-    border-bottom: 1px solid #ececec;
+    padding: 16px 20px;
+    background: transparent;
+    border-bottom: 1px solid #F0F1F3;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 24px;
 }
+
 .qualifications-list-cell--bezeichnung {
-    color: #222;
+    color: #171A1F;
+    font-weight: 600;
 }
+
 .qualifications-list-cell--beschreibung {
-    color: #444;
+    color: #565D6D;
+    font-weight: 400;
 }
+
 .qualifications-list-cell--aktionen {
-    color: #6C73F5;
+    width: 120px;
 }
 
 .qualifications-list-action-btn {
-    background: none;
-    border: none;
-    color: #6C73F5;
+    height: 36px;
+    padding: 0 16px;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
     font-weight: 600;
+    color: #DC2626;
+    background: transparent;
+    border: 1px solid #FEE2E2;
+    border-radius: 8px;
     cursor: pointer;
-    padding: 4px 12px;
-    border-radius: 4px;
-    transition: background 0.15s;
+    transition: all 0.2s ease;
 }
+
 .qualifications-list-action-btn:hover {
-    background: #e7e9fa;
+    background: #FEE2E2;
+    border-color: #FCA5A5;
+    color: #B91C1C;
+}
+
+.qualifications-list-action-btn:active {
+    background: #FCA5A5;
+    border-color: #F87171;
+}
+
+div:has(+ div) {
+    margin-top: 16px;
+}
+
+div:last-child {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: #FEF2F2;
+    border: 1px solid #FEE2E2;
+    border-radius: 8px;
+    color: #DC2626;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
 }
