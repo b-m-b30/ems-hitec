@@ -1,1 +1,22 @@
-<p>employees-list works!</p>
+<div class="employee-list-container">
+  <table class="employee-list-table">
+    <thead class="employee-list-head">
+    <tr class="employee-list-header-row">
+      <th class="employee-list-header employee-list-header--vorname">Vorname</th>
+      <th class="employee-list-header employee-list-header--nachname">Nachname</th>
+      <th class="employee-list-header employee-list-header--löschen">Löschen</th>
+    </tr>
+    </thead>
+    <tbody class="employee-list-tbody">
+      @for (employee of employees(); track employee.id) {
+        <tr class="employee-list-row">
+          <td class="employee-list-cell employee-list-cell--vorname">{{ employee.firstName }}</td>
+          <td class="employee-list-cell employee-list-cell--nachname">{{ employee.lastName }}</td>
+          <td class="employee-list-cell employee-list-cell--löschen">
+            <button class="employee-list-action-btn">Delete</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

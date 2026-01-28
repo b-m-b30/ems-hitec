@@ -1,0 +1,79 @@
+.employee-list-container {
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid #ececec;
+  background: #fff;
+}
+
+.employee-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.employee-list-head {
+  position: sticky;
+  top: 0;
+  background: #f7f8f9;
+  z-index: 1;
+}
+
+.employee-list-header-row {
+}
+
+.employee-list-header {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 700;
+  color: #171A1F;
+  background: #f7f8f9;
+}
+
+.employee-list-header--vorname {
+}
+
+.employee-list-header--nachname {
+}
+
+.employee-list-header--löschen {
+}
+
+.employee-list-tbody {
+}
+
+.employee-list-row {
+}
+
+.employee-list-cell {
+  padding: 10px 16px;
+  background: #fff;
+  border-bottom: 1px solid #ececec;
+}
+
+.employee-list-cell--vorname {
+  color: #222;
+}
+
+.employee-list-cell--nachname {
+  color: #444;
+}
+
+.employee-list-cell--löschen {
+  color: #6C73F5;
+}
+
+.employee-list-action-btn {
+  background: none;
+  border: none;
+  color: #6C73F5;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.employee-list-action-btn:hover {
+  background: #e7e9fa;
+}
