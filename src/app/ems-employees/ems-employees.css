@@ -1,12 +1,19 @@
-h1 {
-  margin: 32px 64px;
-  font-family: Archivo; /* Heading */
-  font-size: 30px;
-  line-height: 36px;
-  font-weight: 700;
-  color: #171A1FFF; /* neutral-900 */
+.employees-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 24px 64px;
 }
 
-.qualifications-filter {
-  margin: 24px 64px;
+/* Heading */
+.employees-heading {
+  margin: 0 0 24px 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #171A1F;
+}
+
+/* wrapper for the list so we can add spacing like qualifications page */
+.employees-list-wrapper {
+  margin-top: 16px;
 }

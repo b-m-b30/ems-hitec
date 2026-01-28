@@ -1,7 +1,5 @@
-import {Component, DestroyRef, inject, OnInit, signal} from '@angular/core';
-import {catchError, interval, startWith, switchMap} from 'rxjs';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {EmployeeResponseDTO, EmployeeService} from '../employee-service';
+import {Component, inject, OnInit} from '@angular/core';
+import {EmployeeStore} from '../employee-store';
 
 @Component({
   selector: 'app-employees-list',
@@ -10,27 +8,25 @@ import {EmployeeResponseDTO, EmployeeService} from '../employee-service';
   styleUrl: './employees-list.css',
 })
 export class EmployeesList implements OnInit {
-  private readonly employeeService = inject(EmployeeService);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly employeeStore = inject(EmployeeStore);
 
-  employees = signal<EmployeeResponseDTO[]>([]);
-
-  private readonly REFRESH_INTERVAL_MS = 30000;
+  employees = this.employeeStore.filteredEmployees;
+  errorMessage = this.employeeStore.error;
+  selectedEmployee = this.employeeStore.selectedEmployee;
 
   ngOnInit(): void {
-    console.log(localStorage.getItem('access_token'));
+    this.employeeStore.startPoll();
+  }
 
-    interval(this.REFRESH_INTERVAL_MS)
-      .pipe(
-        startWith(0),
-        switchMap(() => {
-          console.log('Polling employees...');
-          return this.employeeService.getAll();
-        }),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe((data) => {
-        this.employees.set(data);
-      });
+  onSelectEmployee(id: number): void {
+    this.employeeStore.selectEmployee(id);
+  }
+
+  onClearSelection(): void {
+    this.employeeStore.clearSelection();
+  }
+
+  onClickDelete(id: number): void {
+    this.employeeStore.delete(id);
   }
 }
