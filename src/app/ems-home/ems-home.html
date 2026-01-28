@@ -1,45 +1,47 @@
 <div class="ems-home-root">
-	<!-- Header -->
-	<header class="eh-header">
-		<div class="eh-header-left" (click)="onLogoClick()">
+  <!-- Header -->
+  <header class="eh-header">
+    <div class="eh-header-left" (click)="onLogoClick()">
 			<span class="eh-header-logo">
 				<svg width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<rect width="28" height="28" rx="6" fill="#6C73F5"/>
-					<path d="M14 8a1.5 1.5 0 0 1 1.5 1.5V11h1.5A1.5 1.5 0 0 1 18.5 12.5V14h1.5A1.5 1.5 0 0 1 21.5 15.5v4A1.5 1.5 0 0 1 20 21H8a1.5 1.5 0 0 1-1.5-1.5v-4A1.5 1.5 0 0 1 8 14h1.5v-1.5A1.5 1.5 0 0 1 11 11h1.5V9.5A1.5 1.5 0 0 1 14 8z" fill="#fff"/>
+					<path
+            d="M14 8a1.5 1.5 0 0 1 1.5 1.5V11h1.5A1.5 1.5 0 0 1 18.5 12.5V14h1.5A1.5 1.5 0 0 1 21.5 15.5v4A1.5 1.5 0 0 1 20 21H8a1.5 1.5 0 0 1-1.5-1.5v-4A1.5 1.5 0 0 1 8 14h1.5v-1.5A1.5 1.5 0 0 1 11 11h1.5V9.5A1.5 1.5 0 0 1 14 8z"
+            fill="#fff"/>
 				</svg>
 			</span>
-			<span class="eh-header-title">EMS HiTec GmbH</span>
-		</div>
-		<div class="eh-header-actions">
-			<button class="eh-header-logout" (click)="onLogoutClick()">
-				<span style="font-size:1.1em;">⎋</span> Logout
-			</button>
-			<span class="eh-header-profile" (click)="onProfileClick()">
-				<img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" width="28" height="28" />
+      <span class="eh-header-title">EMS HiTec GmbH</span>
+    </div>
+    <div class="eh-header-actions">
+      <button class="eh-header-logout" (click)="onLogoutClick()">
+        <span style="font-size:1.1em;">⎋</span> Logout
+      </button>
+      <span class="eh-header-profile" (click)="onProfileClick()">
+				<img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" width="28" height="28"/>
 			</span>
-		</div>
-	</header>
+    </div>
+  </header>
 
-	<!-- Main -->
-	<main class="eh-main">
-		<nav class="eh-sidebar">
-			<button class="eh-sidebar-btn" (click)="onMitarbeiterClick()">
-				<span style="font-size:1.2em;">🧑‍💼</span> Mitarbeiter
-			</button>
-			<button class="eh-sidebar-btn" (click)="onQualificationsClick()">
-				<span style="font-size:1.2em;">🎓</span> Qualifikationen
-			</button>
-			<button class="eh-sidebar-btn" (click)="onZuweisenClick()">
-				<span style="font-size:1.2em;">🗂️</span> Qualifikation zuweisen
-			</button>
-		</nav>
-		<section class="eh-content">
-			<router-outlet />
-		</section>
-	</main>
+  <!-- Main -->
+  <main class="eh-main">
+    <nav class="eh-sidebar">
+      <button class="eh-sidebar-btn" (click)="onMitarbeiterClick()">
+        <span style="font-size:1.2em;">🧑‍💼</span> Mitarbeiter
+      </button>
+      <button class="eh-sidebar-btn" (click)="onQualificationsClick()">
+        <span style="font-size:1.2em;">🎓</span> Qualifikationen
+      </button>
+      <button class="eh-sidebar-btn" (click)="onZuweisenClick()">
+        <span style="font-size:1.2em;">🗂️</span> Qualifikation zuweisen
+      </button>
+    </nav>
+    <section class="eh-content">
+      <router-outlet/>
+    </section>
+  </main>
 
-	<!-- Footer -->
-	<footer class="eh-footer">
-		© {{ currentYear }} EMS HiTec GmbH. All rights reserved.
-	</footer>
+  <!-- Footer -->
+  <footer class="eh-footer">
+    © {{ currentYear }} EMS HiTec GmbH. All rights reserved.
+  </footer>
 </div>

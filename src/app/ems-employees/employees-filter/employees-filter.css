@@ -1,0 +1,29 @@
+/* corrected container (flows inside .employees-page) */
+.container {
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #DEE1E6;
+  box-shadow: 0 2px 5px rgba(23, 26, 31, 0.09);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* small visual tweak to match Qualifications page spacing */
+.text {
+  font-family: Archivo, sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  color: #171A1F;
+  margin-bottom: 8px;
+}
+
+/* keep your filter-form/grid styles — they were good */
+.filter-form { /* keep your existing definition */ }
+.textbox { /* keep */ }
+.textbox input, .textbox select { /* keep */ }
+.filter-actions { /* keep */ }
+.reset-btn, .search-btn { /* keep */ }

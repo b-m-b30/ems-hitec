@@ -1,0 +1,19 @@
+.employees-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 24px 64px;
+}
+
+/* Heading */
+.employees-heading {
+  margin: 0 0 24px 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #171A1F;
+}
+
+/* wrapper for the list so we can add spacing like qualifications page */
+.employees-list-wrapper {
+  margin-top: 16px;
+}

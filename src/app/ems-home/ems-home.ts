@@ -11,11 +11,11 @@ import { Router, RouterOutlet } from '@angular/router';
 export class EmsHome {
   private readonly auth = inject(Auth);
   private readonly router = inject(Router);
-  
+
   onLogoClick() {this.router.navigateByUrl('/home')}
   onLogoutClick() {this.auth.logout()}
   onProfileClick() {}
-  onMitarbeiterClick() {}
+  onMitarbeiterClick() {this.router.navigateByUrl('/employees')}
   onQualificationsClick() {this.router.navigateByUrl('/qualifications')}
   onZuweisenClick() {}
 
