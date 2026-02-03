@@ -128,7 +128,7 @@ export class QualificationsStore {
       },
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Löschen der Qualifikation.');
+        this._error.set('Fehler beim Löschen der Qualifikation. (Ist die Qualifikation noch Mitarbeitern zugewiesen?)');
         this._loading.set(false);
       }
     })
