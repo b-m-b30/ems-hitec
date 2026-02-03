@@ -1,10 +1,57 @@
 <h1>Qualifikationen Übersicht</h1>
-<app-qualifications-filter class="qualifications-filter"></app-qualifications-filter>
+<div class="filter-actions">
+    <app-qualifications-filter class="qualifications-filter"></app-qualifications-filter>
+    <button (click)="openModal()" class="add-qualification-button">Qualifikation hinzufügen</button>
+</div>
 <app-qualifications-list></app-qualifications-list>
+
 <button (click)="onDeleteSelected()" class="selection-delete-button">
     Ausgewählte Qualifikationen löschen
 </button>
-<form [formGroup]="qualificationForm" (ngSubmit)="onAddQualification()">
-    <input type="text" placeholder="Neue Qualifikation eingeben" formControlName="skill">
-    <button type="submit" [disabled]="qualificationForm.invalid">Hinzufügen</button>
-</form>
+
+<app-modal [isOpen]="isModalOpen()" [title]="'Qualifikation erstellen'" (close)="closeModal()">
+    <form [formGroup]="qualificationForm" (ngSubmit)="onCreateQualification()" class="qualification-form">
+        <section class="form-section">
+            <h3>Qualifikationdetails</h3>
+            
+            <div class="form-field">
+                <label for="skill">Bezeichnung *</label>
+                <input 
+                    id="skill" 
+                    type="text" 
+                    formControlName="skill" 
+                    placeholder="Projektmanager"
+                />
+            </div>
+        </section>
+
+        <section class="form-section">
+            <h3>Datenimport (JSON)</h3>
+            
+            <div class="form-field">
+                <label for="json-import">JSON-Import</label>
+                <textarea 
+                    id="json-import" 
+                    [value]="jsonImportText()" 
+                    (input)="jsonImportText.set($any($event.target).value)"
+                    rows="4"
+                    placeholder='Fügen Sie hier JSON-Daten ein, z.B. {"bezeichnung": "Projektmanager"} oder [{"skill": "skill1"}, {"skill": "skill2"}]'
+                ></textarea>
+            </div>
+
+            <button type="button" (click)="onImportJson()" class="import-button">Importieren</button>
+        </section>
+
+        <div class="form-actions">
+            <button type="button" (click)="closeModal()" class="cancel-button">Abbrechen</button>
+            <button type="submit" [disabled]="qualificationForm.invalid" class="submit-button">Qualifikation erstellen</button>
+        </div>
+    </form>
+</app-modal>
+
+<app-modal [isOpen]="isErrorModalOpen()" [title]="'Fehler'" (close)="closeErrorModal()">
+    <div class="error-content">
+        <p>{{errorMessage()}}</p>
+        <button (click)="closeErrorModal()" class="error-close-button">Schließen</button>
+    </div>
+</app-modal>

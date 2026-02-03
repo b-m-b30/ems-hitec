@@ -112,6 +112,10 @@ export class QualificationsStore {
     this._filterText.set('');
   }
 
+  clearError(): void {
+    this._error.set(null);
+  }
+
   delete(id: number): void {
     this._loading.set(true);
 
