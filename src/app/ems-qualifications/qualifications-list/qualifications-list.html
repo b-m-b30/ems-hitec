@@ -42,4 +42,8 @@
                 />
             </div>
 	</form>
+	<div class="form-actions">
+            <button type="button" (click)="closeEditModal()" class="cancel-button">Abbrechen</button>
+            <button type="submit" [disabled]="editForm.invalid" class="submit-button">Qualifikation aktualisieren</button>
+        </div>
 </app-modal>
