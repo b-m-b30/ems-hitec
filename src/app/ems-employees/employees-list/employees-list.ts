@@ -8,7 +8,7 @@ import {EmployeeStore} from '../employee-store';
   styleUrl: './employees-list.css',
 })
 export class EmployeesList implements OnInit {
-  private readonly employeeStore = inject(EmployeeStore);
+  readonly employeeStore = inject(EmployeeStore);
 
   employees = this.employeeStore.filteredEmployees;
   errorMessage = this.employeeStore.error;
@@ -28,5 +28,9 @@ export class EmployeesList implements OnInit {
 
   onClickDelete(id: number): void {
     this.employeeStore.delete(id);
+  }
+
+  onClearError(): void {
+    this.employeeStore.clearError();
   }
 }

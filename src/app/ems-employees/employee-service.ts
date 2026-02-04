@@ -1,6 +1,7 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 export interface EmployeeResponseDTO {
   id: number | null;
@@ -46,6 +47,11 @@ export interface EmployeeNameDataDTO {
   firstName: string | null;
 }
 
+export interface EmployeeQualificationDTO {
+  id: number;
+  skill: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -76,25 +82,66 @@ export class EmployeeService {
   }
 
   getAll(): Observable<EmployeeResponseDTO[]> {
-    return this.http.get<EmployeeResponseDTO[]>(this.apiUrl);
+    return this.http.get<EmployeeResponseDTO[]>(this.apiUrl).pipe(
+      catchError(this.handleError)
+    );
   }
 
   postEmployee(employee: EmployeeRequestDTO): Observable<EmployeeResponseDTO> {
-    return this.http.post<EmployeeResponseDTO>(this.apiUrl, employee);
+    return this.http.post<EmployeeResponseDTO>(this.apiUrl, employee).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  getEmployeeQualificationsById(id: number): Observable<EmployeeNameAndSkillDataDTO[]> {
+  getEmployeeQualificationsById(id: number): Observable<EmployeeQualificationDTO[]> {
     const url = `${this.apiUrl}/${id}/${this.qualificationsUrl}`;
-    return this.http.get<EmployeeNameAndSkillDataDTO[]>(url);
+    return this.http.get<EmployeeQualificationDTO[]>(url).pipe(
+      catchError(this.handleError)
+    );
   }
 
   postEmployeeNameAndSkillDataById(id: number, skill: string): Observable<EmployeeNameAndSkillDataDTO> {
     const url = `${this.apiUrl}/${id}/${this.qualificationsUrl}`;
-    return this.http.post<EmployeeNameAndSkillDataDTO>(url, {skill});
+    return this.http.post<EmployeeNameAndSkillDataDTO>(url, {skill}).pipe(
+      catchError(this.handleError)
+    );
   }
 
   deleteEmployeeQualificationById(employeeId: number, qualificationId: number): Observable<void> {
     const url = `${this.apiUrl}/${employeeId}/${this.qualificationsUrl}/${qualificationId}`;
-    return this.http.delete<void>(url);
+    return this.http.delete<void>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+      return throwError(() => new Error('Verbindungsfehler: Server nicht erreichbar.'));
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+
+      let errorMessage = 'Unbekannter Fehler';
+      if (error.error && typeof error.error === 'string') {
+        // Known backend bug: 500 error returns "OK" string
+        if (error.status === 500 && error.error === 'OK') {
+          errorMessage = 'Interner Serverfehler (Backend Unhandled Exception)';
+        } else if (error.status === 401 && error.error === 'OK') {
+          errorMessage = 'Nicht autorisiert. Bitte Administrator konktaktieren oder neu einloggen.';
+        } else {
+          errorMessage = error.error;
+        }
+      } else if (error.error && error.error.message) {
+        errorMessage = error.error.message;
+      } else {
+        errorMessage = error.statusText || 'Server-Fehler';
+      }
+
+      return throwError(() => new Error(`Server Fehler (${error.status}): ${errorMessage}`));
+    }
   }
 }

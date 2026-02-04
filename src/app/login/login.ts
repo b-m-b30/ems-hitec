@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, inject, Input, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../auth/auth';
@@ -25,16 +24,33 @@ export class LoginComponent {
   });
 
   protected readonly isLoading = signal(false);
+  protected readonly errorMessage = signal<string | null>(null);
+  private _errorTimeout: any;
+
+  private setError(message: string): void {
+    this.errorMessage.set(message);
+    if (this._errorTimeout) {
+      clearTimeout(this._errorTimeout);
+    }
+    this._errorTimeout = setTimeout(() => {
+      this.errorMessage.set(null);
+      this._errorTimeout = null;
+    }, 5000);
+  }
 
   onSignIn(): void {
     this.isLoading.set(true);
-    this.authService.createToken('john', 'ZIKP24RzyA6ENvbpqVPc3W5RRQFBKgykylZuRXu8jIv1tXXnT2x38Oltldqq').subscribe({
+    this.errorMessage.set(null);
+    // Use the simplified password 'secret' defined in the blueprint
+    this.authService.createToken('john', 'secret').subscribe({
       next: () => {
         this.isLoading.set(false);
         this.router.navigateByUrl('/home');
       },
-      error: () => {
+      error: (err) => {
+        console.error('Login error', err);
         this.isLoading.set(false);
+        this.setError('SSO Login fehlgeschlagen. Bitte prüfen Sie Ihre Verbindung.');
       },
     });
   }
@@ -46,15 +62,22 @@ export class LoginComponent {
 
     const { username, password } = this.loginForm.value;
     this.isLoading.set(true);
+    this.errorMessage.set(null);
 
     this.authService.createToken(username!, password!).subscribe({
       next: () => {
         this.isLoading.set(false);
         this.router.navigateByUrl('/home');
       },
-      error: () => {
+      error: (err) => {
+        console.error('Login error', err);
         this.isLoading.set(false);
+        this.setError('Login fehlgeschlagen. Bitte prüfen Sie Benutzername und Passwort.');
       },
     });
+  }
+
+  onClearError(): void {
+    this.errorMessage.set(null);
   }
 }

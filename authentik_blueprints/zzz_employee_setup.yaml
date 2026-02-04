@@ -13,6 +13,7 @@ entries:
       username: john
       name: John Doe
       email: john@example.com
+      password: secret
       is_active: true
       type: internal
       path: users

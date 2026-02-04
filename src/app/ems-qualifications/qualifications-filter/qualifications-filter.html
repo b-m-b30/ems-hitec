@@ -1,7 +1,7 @@
 <div class="textbox">
-	<input 
-		type="text" 
-		placeholder="Qualifikationen nach Bezeichnung filtern..." 
+	<input
+		type="text"
+		placeholder="Qualifikationen filtern..."
 		[value]="filterText()"
 		(input)="onFilterChange($event)"
 	/>
@@ -12,9 +12,9 @@
 	</svg>
 	<!-- Right icon (clear) -->
 	@if (filterText()) {
-		<svg 
-			class="icon" 
-			style="right:12px;cursor:pointer;" 
+		<svg
+			class="icon"
+			style="right:12px;cursor:pointer;"
 			viewBox="0 0 16 16"
 			(click)="onClearFilter()"
 			role="button"

@@ -37,6 +37,18 @@ export class QualificationsStore {
   private readonly destroyref = inject(DestroyRef);
 
   private readonly REFRESH_INTERVAL_MS = 30000;
+  private _errorTimeout: any;
+
+  private setError(message: string): void {
+    this._error.set(message);
+    if (this._errorTimeout) {
+      clearTimeout(this._errorTimeout);
+    }
+    this._errorTimeout = setTimeout(() => {
+      this._error.set(null);
+      this._errorTimeout = null;
+    }, 5000);
+  }
 
   load(): void {
     if (this._loading()) {
@@ -50,7 +62,7 @@ export class QualificationsStore {
       next: data => this._qualifications.set(data),
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Laden der Qualifikationen.');
+        this.setError(`Fehler beim Laden der Qualifikationen: ${err.message || 'Unbekannter Fehler'}`);
       },
       complete: () => this._loading.set(false),
     });
@@ -65,7 +77,7 @@ export class QualificationsStore {
       next: data => this._qualifications.set(data),
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Polling')
+        this.setError('Fehler beim Polling');
       }
     })
   }
@@ -80,7 +92,7 @@ export class QualificationsStore {
       },
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Erstellen der Qualifikation.');
+        this.setError('Fehler beim Erstellen der Qualifikation.');
         this._loading.set(false);
       }
     })
@@ -98,7 +110,7 @@ export class QualificationsStore {
       },
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Aktualisieren der Qualifikation.');
+        this.setError('Fehler beim Aktualisieren der Qualifikation.');
         this._loading.set(false);
       }
     })
@@ -128,7 +140,7 @@ export class QualificationsStore {
       },
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Löschen der Qualifikation. (Ist die Qualifikation noch Mitarbeitern zugewiesen?)');
+        this.setError('Fehler beim Löschen der Qualifikation. (Ist die Qualifikation noch Mitarbeitern zugewiesen?)');
         this._loading.set(false);
       }
     })
