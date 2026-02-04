@@ -1,6 +1,10 @@
 import {computed, DestroyRef, inject, Injectable, signal} from '@angular/core';
 import {
-  EmployeeResponseDTO, EmployeeRequestDTO, EmployeeRequestPutDTO, EmployeeService, EmployeeNameAndSkillDataDTO
+  EmployeeNameAndSkillDataDTO,
+  EmployeeRequestDTO,
+  EmployeeRequestPutDTO,
+  EmployeeResponseDTO,
+  EmployeeService
 } from './employee-service';
 import {interval, startWith, switchMap} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';

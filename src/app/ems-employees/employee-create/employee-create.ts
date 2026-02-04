@@ -1,4 +1,4 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, computed, EventEmitter, inject, Output} from '@angular/core';
 import {EmployeeStore} from '../employee-store';
 import {QualificationsStore} from '../../ems-qualifications/qualifications-store';
 import {EmployeeRequestDTO} from '../employee-service';
@@ -26,32 +26,18 @@ export class EmployeeCreate {
     this.qualificationIds().map(id => this.qualifications().find(q => q.id === id)!).filter(Boolean)
   );
 
+  @Output() created = new EventEmitter<void>();
 
   onFirstNameChange(event: Event) {
-    this.store.setFirstNameCreate(
-      (event.target as HTMLInputElement).value
-    );
+    this.store.setFirstNameCreate((event.target as HTMLInputElement).value);
   }
 
   onLastNameChange(event: Event) {
-    this.store.setLastNameCreate(
-      (event.target as HTMLInputElement).value
-    );
+    this.store.setLastNameCreate((event.target as HTMLInputElement).value);
   }
 
   onCityChange(event: Event) {
-    this.store.setCityCreate(
-      (event.target as HTMLInputElement).value
-    );
-  }
-
-  onQualificationChange(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    if (!target) return;
-    const selectedIds = Array.from(target.selectedOptions)
-      .map(option => Number(option.value));
-
-    this.store.setQualificationCreate(selectedIds);
+    this.store.setCityCreate((event.target as HTMLInputElement).value);
   }
 
   onAddQualification(event: Event) {
@@ -59,14 +45,10 @@ export class EmployeeCreate {
     if (!target?.value) return;
 
     const id = Number(target.value);
-
-    // Only add if not already selected
     const current = this.store.qualificationCreate();
     if (!current.includes(id)) {
       this.store.setQualificationCreate([...current, id]);
     }
-
-    // reset select
     target.value = '';
   }
 
@@ -75,8 +57,7 @@ export class EmployeeCreate {
     this.store.setQualificationCreate(current.filter(qId => qId !== id));
   }
 
-
-  onSubmit(): void {
+  onSubmit() {
     const dto: EmployeeRequestDTO = {
       firstName: this.firstName(),
       lastName: this.lastName(),
@@ -93,5 +74,7 @@ export class EmployeeCreate {
     this.store.setLastNameCreate('');
     this.store.setCityCreate('');
     this.store.setQualificationCreate([]);
+
+    this.created.emit();
   }
 }

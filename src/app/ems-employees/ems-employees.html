@@ -4,6 +4,18 @@
   <div class="employees-content">
     <app-employees-filter></app-employees-filter>
     <app-employees-list></app-employees-list>
-    <app-employee-create></app-employee-create>
+
+    <button class="search-btn" (click)="openCreateModal()">
+      Neuen Mitarbeiter erstellen
+    </button>
+
+    <!-- Modal for creating employee -->
+    <app-modal
+      [isOpen]="isCreateModalOpen()"
+      title="Neuen Mitarbeiter erstellen"
+      (close)="closeCreateModal()"
+    >
+      <app-employee-create (created)="onEmployeeCreated()"></app-employee-create>
+    </app-modal>
   </div>
 </div>
