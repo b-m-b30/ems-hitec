@@ -112,6 +112,10 @@ export class QualificationsStore {
     this._filterText.set('');
   }
 
+  clearError(): void {
+    this._error.set(null);
+  }
+
   delete(id: number): void {
     this._loading.set(true);
 
@@ -124,7 +128,7 @@ export class QualificationsStore {
       },
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Löschen der Qualifikation.');
+        this._error.set('Fehler beim Löschen der Qualifikation. (Ist die Qualifikation noch Mitarbeitern zugewiesen?)');
         this._loading.set(false);
       }
     })
