@@ -35,6 +35,30 @@
       />
     </div>
 
+    <!-- Qualifications -->
+    <div class="textbox">
+      <label>Qualifikationen</label>
+
+      <div class="selected-qualifications">
+        @for (qual of selectedQualifications(); track qual.id) {
+          <span class="qualification-chip">
+        {{ qual.skill }}
+            <button type="button" (click)="removeQualification(qual.id)">×</button>
+      </span>
+        }
+      </div>
+
+      <!-- Dropdown to add qualifications -->
+      <select (change)="onAddQualification($event)">
+        <option value="">Qualifikation hinzufügen...</option>
+        @for (q of qualifications(); track q.id) {
+          <option [value]="q.id" [disabled]="qualificationIds().includes(q.id)">
+            {{ q.skill }}
+          </option>
+        }
+      </select>
+    </div>
+
     <!-- Submit -->
     <div class="filter-actions">
       <button type="button" class="search-btn" (click)="onSubmit()">

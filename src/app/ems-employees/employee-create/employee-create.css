@@ -64,6 +64,34 @@
   background-color: #1D4ED8;
 }
 
+.selected-qualifications {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.qualification-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #DBEAFE;
+  color: #1D4ED8;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+.qualification-chip button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1D4ED8;
+  font-weight: bold;
+  line-height: 1;
+  padding: 0;
+}
+
 .employees-list-error {
   margin-top: 12px;
   padding: 12px;

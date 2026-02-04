@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {EmployeeStore} from '../employee-store';
 import {QualificationsStore} from '../../ems-qualifications/qualifications-store';
 import {EmployeeRequestDTO} from '../employee-service';
@@ -15,12 +15,17 @@ export class EmployeeCreate {
   firstName = this.store.firstNameCreate;
   lastName = this.store.lastNameCreate;
   city = this.store.cityCreate;
-  qualificationId = this.store.qualificationCreate;
+  qualificationIds = this.store.qualificationCreate;
 
   loading = this.store.loading;
   errorMessage = this.store.error;
 
   qualifications = this.qualificationsStore.filteredQualifications;
+
+  selectedQualifications = computed(() =>
+    this.qualificationIds().map(id => this.qualifications().find(q => q.id === id)!).filter(Boolean)
+  );
+
 
   onFirstNameChange(event: Event) {
     this.store.setFirstNameCreate(
@@ -41,9 +46,35 @@ export class EmployeeCreate {
   }
 
   onQualificationChange(event: Event) {
-    const value = (event.target as HTMLSelectElement).value;
-    this.store.setQualificationCreate(value ? Number(value) : null);
+    const target = event.target as HTMLSelectElement;
+    if (!target) return;
+    const selectedIds = Array.from(target.selectedOptions)
+      .map(option => Number(option.value));
+
+    this.store.setQualificationCreate(selectedIds);
   }
+
+  onAddQualification(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    if (!target?.value) return;
+
+    const id = Number(target.value);
+
+    // Only add if not already selected
+    const current = this.store.qualificationCreate();
+    if (!current.includes(id)) {
+      this.store.setQualificationCreate([...current, id]);
+    }
+
+    // reset select
+    target.value = '';
+  }
+
+  removeQualification(id: number) {
+    const current = this.store.qualificationCreate();
+    this.store.setQualificationCreate(current.filter(qId => qId !== id));
+  }
+
 
   onSubmit(): void {
     const dto: EmployeeRequestDTO = {
@@ -53,7 +84,7 @@ export class EmployeeCreate {
       street: '–',
       postcode: '00000',
       phone: '–',
-      skillSet: [],
+      skillSet: this.qualificationIds(),
     };
 
     this.store.create(dto);
@@ -61,6 +92,6 @@ export class EmployeeCreate {
     this.store.setFirstNameCreate('');
     this.store.setLastNameCreate('');
     this.store.setCityCreate('');
-    this.store.setQualificationCreate(null);
+    this.store.setQualificationCreate([]);
   }
 }

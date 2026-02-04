@@ -25,7 +25,7 @@ export class EmployeeStore {
   private readonly _firstNameCreate = signal('');
   private readonly _lastNameCreate = signal('');
   private readonly _cityCreate = signal('');
-  private readonly _qualificationCreate = signal<number | null>(null);
+  private readonly _qualificationCreate = signal<number[]>([]);
 
   readonly employees = this._employees.asReadonly();
   readonly selectedEmployee = this._selectedEmployee.asReadonly();
@@ -216,19 +216,19 @@ export class EmployeeStore {
     this._qualificationIdFilter.set(id);
   }
 
-  setFirstNameCreate(value:string) {
+  setFirstNameCreate(value: string) {
     this._firstNameCreate.set(value);
   }
 
-  setLastNameCreate(value:string) {
+  setLastNameCreate(value: string) {
     this._lastNameCreate.set(value);
   }
 
-  setCityCreate(value:string) {
+  setCityCreate(value: string) {
     this._cityCreate.set(value);
   }
 
-  setQualificationCreate(value: number | null) {
-    this._qualificationCreate.set(value);
+  setQualificationCreate(ids: number[]) {
+    this._qualificationCreate.set(ids);
   }
 }
