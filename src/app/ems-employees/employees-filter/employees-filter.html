@@ -7,8 +7,8 @@
       <input
         type="text"
         placeholder="Vorname"
-        [value]="filterText()"
-        (input)="onFilterChange($event)"
+        [value]="firstName()"
+        (input)="onFirstNameChange($event)"
       />
     </div>
 
@@ -17,8 +17,8 @@
       <input
         type="text"
         placeholder="Nachname"
-        [value]="filterText()"
-        (input)="onFilterChange($event)"
+        [value]="lastName()"
+        (input)="onLastNameChange($event)"
       />
     </div>
 
@@ -27,14 +27,17 @@
       <input
         type="text"
         placeholder="Ort"
-        [value]="filterText()"
-        (input)="onFilterChange($event)"
+        [value]="city()"
+        (input)="onCityChange($event)"
       />
     </div>
 
     <!-- Qualifikation -->
     <div class="textbox">
-      <select (change)="onFilterChange($event)">
+      <select
+        [value]="qualificationId()"
+        (change)="onQualificationChange($event)"
+      >
         <option value="">Qualifikation auswählen</option>
       </select>
     </div>
@@ -52,8 +55,6 @@
         </svg>
         Filter zurücksetzen
       </button>
-
-      <button type="submit" class="search-btn">Suchen</button>
     </div>
   </form>
 </div>

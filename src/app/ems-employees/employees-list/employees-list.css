@@ -1,11 +1,10 @@
 .employee-list-container {
-  max-height: 420px;         /* controlled scroll area like Qualifications */
-  overflow-y: auto;         /* crucial: sticky headers stick inside this container */
-  border-radius: 12px;      /* slightly bigger radius for parity */
-  border: 1px solid #DEE1E6;/* match qualifications */
+  width: 104%;
   background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 5px rgba(23, 26, 31, 0.09);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 /* table sizing */
@@ -64,7 +63,7 @@
   height: 36px;
   padding: 0 12px;
   font-weight: 600;
-  color: #2563EB;
+  color: red;
   background: transparent;
   border: 1px solid #DBEAFE;
   border-radius: 8px;
@@ -78,7 +77,6 @@
   color: #1D4ED8;
 }
 
-/* error block (same styling as qualifications) */
 .employees-list-error {
   margin-top: 16px;
   padding: 12px 16px;

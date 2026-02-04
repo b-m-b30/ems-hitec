@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { EmployeeStore } from '../employee-store';
+import {Component, inject} from '@angular/core';
+import {EmployeeStore} from '../employee-store';
 
 @Component({
   selector: 'app-employees-filter',
@@ -9,11 +9,34 @@ import { EmployeeStore } from '../employee-store';
 export class EmployeesFilter {
   private readonly store = inject(EmployeeStore);
 
-  filterText = this.store.filterText;
+  // expose store signals directly to the template
+  firstName = this.store.firstNameFilter;
+  lastName = this.store.lastNameFilter;
+  city = this.store.cityFilter;
+  qualificationId = this.store.qualificationFilter;
 
-  onFilterChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.store.setFilter(input.value);
+  onFirstNameChange(event: Event): void {
+    this.store.setFirstNameFilter(
+      (event.target as HTMLInputElement).value
+    );
+  }
+
+  onLastNameChange(event: Event): void {
+    this.store.setLastNameFilter(
+      (event.target as HTMLInputElement).value
+    );
+  }
+
+  onCityChange(event: Event): void {
+    this.store.setCityFilter(
+      (event.target as HTMLInputElement).value
+    );
+  }
+
+  onQualificationChange(event: Event): void {
+    this.store.setQualificationFilter(
+      (event.target as HTMLSelectElement).value
+    );
   }
 
   onClearFilter(): void {

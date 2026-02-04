@@ -1,5 +1,6 @@
 import {computed, DestroyRef, inject, Injectable, signal} from '@angular/core';
-import {EmployeeResponseDTO, EmployeeRequestDTO, EmployeeRequestPutDTO, EmployeeService, EmployeeNameAndSkillDataDTO
+import {
+  EmployeeResponseDTO, EmployeeRequestDTO, EmployeeRequestPutDTO, EmployeeService, EmployeeNameAndSkillDataDTO
 } from './employee-service';
 import {interval, startWith, switchMap} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -15,23 +16,38 @@ export class EmployeeStore {
 
   private readonly _loading = signal<boolean>(false);
   private readonly _error = signal<string | null>(null);
-  private readonly _filterText = signal<string>('');
+
+  private readonly _firstNameFilter = signal('');
+  private readonly _lastNameFilter = signal('');
+  private readonly _cityFilter = signal('');
+  private readonly _qualificationIdFilter = signal('');
+
+  private readonly _firstNameCreate = signal('');
+  private readonly _lastNameCreate = signal('');
+  private readonly _cityCreate = signal('');
+  private readonly _qualificationCreate = signal<number | null>(null);
 
   readonly employees = this._employees.asReadonly();
   readonly selectedEmployee = this._selectedEmployee.asReadonly();
   readonly employeeQualifications = this._employeeQualifications.asReadonly();
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
-  readonly filterText = this._filterText.asReadonly();
+
+  readonly firstNameFilter = this._firstNameFilter.asReadonly();
+  readonly lastNameFilter = this._lastNameFilter.asReadonly();
+  readonly cityFilter = this._cityFilter.asReadonly();
+  readonly qualificationFilter = this._qualificationIdFilter.asReadonly();
+
+  readonly firstNameCreate = this._firstNameCreate.asReadonly();
+  readonly lastNameCreate = this._lastNameCreate.asReadonly();
+  readonly cityCreate = this._cityCreate.asReadonly();
+  readonly qualificationCreate = this._qualificationCreate.asReadonly();
 
   readonly filteredEmployees = computed(() => {
-    const filter = this._filterText().toLowerCase().trim();
-    if (!filter) {
-      return this._employees();
-    }
-
     return this._employees().filter(e =>
-      `${e.firstName} ${e.lastName}`.toLowerCase().includes(filter)
+      (!this._firstNameFilter() || e.firstName.toLowerCase().includes(this._firstNameFilter().toLowerCase())) &&
+      (!this._lastNameFilter() || e.lastName.toLowerCase().includes(this._lastNameFilter().toLowerCase())) &&
+      (!this._cityFilter() || e.city.toLowerCase().includes(this._cityFilter().toLowerCase()))
     );
   });
 
@@ -72,7 +88,7 @@ export class EmployeeStore {
         next: data => this._employees.set(data),
         error: err => {
           console.error(err);
-          this._error.set('Fehler beim Polling der Mitarbeiter.');
+          this._error.set('Fehler beim Pulling der Mitarbeiter.');
         },
       });
   }
@@ -199,11 +215,41 @@ export class EmployeeStore {
       });
   }
 
-  setFilter(text: string): void {
-    this._filterText.set(text);
+  clearFilter(): void {
+    this._firstNameFilter.set('');
+    this._lastNameFilter.set('');
+    this._cityFilter.set('');
   }
 
-  clearFilter(): void {
-    this._filterText.set('');
+  setFirstNameFilter(value: string) {
+    this._firstNameFilter.set(value);
+  }
+
+  setLastNameFilter(value: string) {
+    this._lastNameFilter.set(value);
+  }
+
+  setCityFilter(value: string) {
+    this._cityFilter.set(value);
+  }
+
+  setQualificationFilter(value: string) {
+    this._qualificationIdFilter.set(value);
+  }
+
+  setFirstNameCreate(value:string) {
+    this._firstNameCreate.set(value);
+  }
+
+  setLastNameCreate(value:string) {
+    this._lastNameCreate.set(value);
+  }
+
+  setCityCreate(value:string) {
+    this._cityCreate.set(value);
+  }
+
+  setQualificationCreate(value: number | null) {
+    this._qualificationCreate.set(value);
   }
 }

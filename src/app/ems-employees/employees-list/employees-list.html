@@ -2,11 +2,12 @@
   <table class="employee-list-table">
     <thead class="employee-list-thead">
     <tr class="employee-list-header-row">
-      <th class="employee-list-header employee-list-header--select"></th>
-      <th class="employee-list-header employee-list-header--vorname">Vorname</th>
-      <th class="employee-list-header employee-list-header--nachname">Nachname</th>
+      <th class="employee-list-header"></th>
+      <th class="employee-list-header">Vorname</th>
+      <th class="employee-list-header">Nachname</th>
       <th class="employee-list-header">Ort</th>
-      <th class="employee-list-header employee-list-header--aktionen">Aktionen</th>
+      <th class="employee-list-header">Qualifikationen</th>
+      <th class="employee-list-header">Aktionen</th>
     </tr>
     </thead>
 
@@ -23,10 +24,11 @@
               (click)="$event.stopPropagation(); onSelectEmployee(employee.id!)"
             />
           </td>
-          <td class="employee-list-cell employee-list-cell--vorname">{{ employee.firstName }}</td>
-          <td class="employee-list-cell employee-list-cell--nachname">{{ employee.lastName }}</td>
+          <td class="employee-list-cell">{{ employee.firstName }}</td>
+          <td class="employee-list-cell">{{ employee.lastName }}</td>
           <td class="employee-list-cell">{{ employee.city }}</td>
-          <td class="employee-list-cell employee-list-cell--aktionen">
+          <td class="employee-list-cell">{{ employee.skillSet }}</td>
+          <td class="employee-list-cell">
             <button class="employee-list-action-btn" (click)="$event.stopPropagation(); onClickDelete(employee.id!)">
               Delete
             </button>

@@ -1,0 +1,60 @@
+<div class="container employee-create-container">
+  <div class="text">Neuen Mitarbeiter erstellen</div>
+
+  <form (submit)="$event.preventDefault()" class="filter-form">
+    <!-- First Name -->
+    <div class="textbox">
+      <label>Vorname</label>
+      <input
+        type="text"
+        [value]="firstName()"
+        (input)="onFirstNameChange($event)"
+        placeholder="Vorname"
+      />
+    </div>
+
+    <!-- Last Name -->
+    <div class="textbox">
+      <label>Nachname</label>
+      <input
+        type="text"
+        [value]="lastName()"
+        (input)="onLastNameChange($event)"
+        placeholder="Nachname"
+      />
+    </div>
+
+    <!-- City -->
+    <div class="textbox">
+      <label>Ort</label>
+      <input
+        type="text"
+        [value]="city()"
+        (input)="onCityChange($event)"
+        placeholder="Ort"
+      />
+    </div>
+
+    <div class="textbox">
+      <label>Qualifikation</label>
+      <select [value]="qualificationId()" (change)="onQualificationChange($event)">
+        <option value="">Keine</option>
+        @for (qualification of qualifications(); track qualification.id) {
+          <option [value]="qualification.id">{{ qualification.skill }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Submit -->
+    <div class="filter-actions">
+      <button type="button" class="search-btn" (click)="onSubmit()">
+        Erstellen
+      </button>
+    </div>
+  </form>
+
+  <!-- error message -->
+  @if (errorMessage()) {
+    <div class="employees-list-error">{{ errorMessage() }}</div>
+  }
+</div>
