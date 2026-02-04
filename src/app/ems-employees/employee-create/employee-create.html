@@ -4,7 +4,6 @@
   <form (submit)="$event.preventDefault()" class="filter-form">
     <!-- First Name -->
     <div class="textbox">
-      <label>Vorname</label>
       <input
         type="text"
         [value]="firstName()"
@@ -15,7 +14,6 @@
 
     <!-- Last Name -->
     <div class="textbox">
-      <label>Nachname</label>
       <input
         type="text"
         [value]="lastName()"
@@ -26,7 +24,6 @@
 
     <!-- City -->
     <div class="textbox">
-      <label>Ort</label>
       <input
         type="text"
         [value]="city()"
@@ -37,8 +34,6 @@
 
     <!-- Qualifications -->
     <div class="textbox">
-      <label>Qualifikationen</label>
-
       <div class="selected-qualifications">
         @for (qual of selectedQualifications(); track qual.id) {
           <span class="qualification-chip">
@@ -59,7 +54,7 @@
       </select>
     </div>
 
-    <!-- Submit -->
+    <!-- Create Button -->
     <div class="filter-actions">
       <button type="button" class="search-btn" (click)="onSubmit()">
         Erstellen
