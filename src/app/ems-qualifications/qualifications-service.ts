@@ -45,7 +45,7 @@ export class QualificationsService {
 
   delete(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url); //500 OK abfangen (Qualifikation an employee gebunden)
+    return this.http.delete<void>(url);
   }
 
   findEmployeesByQualification(id: number): Observable<EmployeesForAQualificationDTO> {

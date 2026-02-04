@@ -5,12 +5,10 @@
 		[value]="filterText()"
 		(input)="onFilterChange($event)"
 	/>
-	<!-- Left icon (search) -->
 	<svg class="left icon" viewBox="0 0 16 16">
 		<circle cx="7" cy="7" r="5.5" stroke="#565D6D" stroke-width="1.5" fill="none"/>
 		<line x1="11.2" y1="11.2" x2="15" y2="15" stroke="#565D6D" stroke-width="1.5" stroke-linecap="round"/>
 	</svg>
-	<!-- Right icon (clear) -->
 	@if (filterText()) {
 		<svg 
 			class="icon" 
