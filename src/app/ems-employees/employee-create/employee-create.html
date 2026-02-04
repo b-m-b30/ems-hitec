@@ -38,7 +38,10 @@
         <select (change)="onAddQualification($event)">
           <option value="">Qualifikation hinzufügen...</option>
           @for (q of qualifications() ?? []; track q.id) {
-            <option [value]="q.id" [disabled]="employeeForm.value.qualifications.includes(q.id)">
+            <option
+              [value]="q.id"
+              [disabled]="(employeeForm.value.qualifications ?? []).includes(q.id)"
+            >
               {{ q.skill }}
             </option>
           }
