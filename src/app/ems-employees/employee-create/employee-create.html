@@ -1,68 +1,60 @@
-<div class="container employee-create-container">
-  <div class="text">Neuen Mitarbeiter erstellen</div>
+<app-modal [isOpen]="isModalOpen()" [title]="'Neuen Mitarbeiter erstellen'" (close)="closeModal()">
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="employee-form">
 
-  <form (submit)="$event.preventDefault()" class="filter-form">
-    <!-- Firstname -->
-    <div class="textbox">
-      <input
-        type="text"
-        [value]="firstName()"
-        (input)="onFirstNameChange($event)"
-        placeholder="Vorname"
-      />
-    </div>
+    <!-- Personal Details -->
+    <section class="form-section">
+      <h3>Persönliche Daten</h3>
 
-    <!-- Lastname -->
-    <div class="textbox">
-      <input
-        type="text"
-        [value]="lastName()"
-        (input)="onLastNameChange($event)"
-        placeholder="Nachname"
-      />
-    </div>
+      <div class="form-field">
+        <label for="firstName">Vorname *</label>
+        <input id="firstName" type="text" formControlName="firstName" placeholder="Vorname"/>
+      </div>
 
-    <!-- City -->
-    <div class="textbox">
-      <input
-        type="text"
-        [value]="city()"
-        (input)="onCityChange($event)"
-        placeholder="Ort"
-      />
-    </div>
+      <div class="form-field">
+        <label for="lastName">Nachname *</label>
+        <input id="lastName" type="text" formControlName="lastName" placeholder="Nachname"/>
+      </div>
+
+      <div class="form-field">
+        <label for="city">Ort *</label>
+        <input id="city" type="text" formControlName="city" placeholder="Ort"/>
+      </div>
+    </section>
 
     <!-- Qualifications -->
-    <div class="textbox">
+    <section class="form-section">
+      <h3>Qualifikationen</h3>
+
       <div class="selected-qualifications">
         @for (qual of selectedQualifications(); track qual.id) {
           <span class="qualification-chip">
-        {{ qual.skill }}
+            {{ qual.skill }}
             <button type="button" (click)="removeQualification(qual.id)">×</button>
-      </span>
+          </span>
         }
       </div>
 
-      <!-- Dropdown to add qualifications -->
-      <select (change)="onAddQualification($event)">
-        <option value="">Qualifikation hinzufügen...</option>
-        @for (q of qualifications(); track q.id) {
-          <option [value]="q.id" [disabled]="qualificationIds().includes(q.id)">
-            {{ q.skill }}
-          </option>
-        }
-      </select>
+      <div class="form-field">
+        <select (change)="onAddQualification($event)">
+          <option value="">Qualifikation hinzufügen...</option>
+          @for (q of qualifications() ?? []; track q.id) {
+            <option [value]="q.id" [disabled]="employeeForm.value.qualifications.includes(q.id)">
+              {{ q.skill }}
+            </option>
+          }
+        </select>
+      </div>
+    </section>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button type="button" class="cancel-button" (click)="closeModal()">Abbrechen</button>
+      <button type="submit" class="submit-button" [disabled]="employeeForm.invalid">Mitarbeiter erstellen</button>
     </div>
 
-    <!-- Create Button -->
-    <div class="filter-actions">
-      <button type="button" class="search-btn" (click)="onSubmit()">
-        Erstellen
-      </button>
-    </div>
+    <!-- Error -->
+    @if (errorMessage()) {
+      <div class="employees-list-error">{{ errorMessage() }}</div>
+    }
   </form>
-
-  @if (errorMessage()) {
-    <div class="employees-list-error">{{ errorMessage() }}</div>
-  }
-</div>
+</app-modal>

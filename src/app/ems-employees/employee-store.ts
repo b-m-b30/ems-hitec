@@ -32,8 +32,6 @@ export class EmployeeStore {
   private readonly _qualificationCreate = signal<number[]>([]);
 
   readonly employees = this._employees.asReadonly();
-  readonly selectedEmployee = this._selectedEmployee.asReadonly();
-  readonly employeeQualifications = this._employeeQualifications.asReadonly();
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
 
@@ -41,11 +39,6 @@ export class EmployeeStore {
   readonly lastNameFilter = this._lastNameFilter.asReadonly();
   readonly cityFilter = this._cityFilter.asReadonly();
   readonly qualificationFilter = this._qualificationIdFilter.asReadonly();
-
-  readonly firstNameCreate = this._firstNameCreate.asReadonly();
-  readonly lastNameCreate = this._lastNameCreate.asReadonly();
-  readonly cityCreate = this._cityCreate.asReadonly();
-  readonly qualificationCreate = this._qualificationCreate.asReadonly();
 
   readonly filteredEmployees = computed(() => {
     const filterId = this._qualificationIdFilter();
@@ -154,49 +147,6 @@ export class EmployeeStore {
     });
   }
 
-  loadQualifications(employeeId: number): void {
-    this.api.getEmployeeQualificationsById(employeeId).subscribe({
-      next: data => this._employeeQualifications.set(data),
-      error: err => {
-        console.error(err);
-        this._error.set('Fehler beim Laden der Qualifikationen.');
-      },
-    });
-  }
-
-  addQualification(employeeId: number, skill: string): void {
-    this.api
-      .postEmployeeNameAndSkillDataById(employeeId, skill)
-      .subscribe({
-        next: qualification => {
-          this._employeeQualifications.update(list => [
-            ...list,
-            qualification,
-          ]);
-        },
-        error: err => {
-          console.error(err);
-          this._error.set('Fehler beim Hinzufügen der Qualifikation.');
-        },
-      });
-  }
-
-  removeQualification(employeeId: number, qualificationId: number): void {
-    this.api
-      .deleteEmployeeQualificationById(employeeId, qualificationId)
-      .subscribe({
-        next: () => {
-          this._employeeQualifications.update(list =>
-            list.filter(q => q.id !== qualificationId)
-          );
-        },
-        error: err => {
-          console.error(err);
-          this._error.set('Fehler beim Entfernen der Qualifikation.');
-        },
-      });
-  }
-
   clearFilter(): void {
     this._firstNameFilter.set('');
     this._lastNameFilter.set('');
@@ -220,19 +170,7 @@ export class EmployeeStore {
     this._qualificationIdFilter.set(id);
   }
 
-  setFirstNameCreate(value: string) {
-    this._firstNameCreate.set(value);
-  }
-
-  setLastNameCreate(value: string) {
-    this._lastNameCreate.set(value);
-  }
-
-  setCityCreate(value: string) {
-    this._cityCreate.set(value);
-  }
-
-  setQualificationCreate(ids: number[]) {
-    this._qualificationCreate.set(ids);
+  clearError(): void {
+    this._error.set(null);
   }
 }
