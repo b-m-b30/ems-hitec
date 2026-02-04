@@ -20,7 +20,7 @@ export class EmployeeStore {
   private readonly _firstNameFilter = signal('');
   private readonly _lastNameFilter = signal('');
   private readonly _cityFilter = signal('');
-  private readonly _qualificationIdFilter = signal('');
+  private readonly _qualificationIdFilter = signal(<number | null>null);
 
   private readonly _firstNameCreate = signal('');
   private readonly _lastNameCreate = signal('');
@@ -44,10 +44,12 @@ export class EmployeeStore {
   readonly qualificationCreate = this._qualificationCreate.asReadonly();
 
   readonly filteredEmployees = computed(() => {
+    const filterId = this._qualificationIdFilter();
     return this._employees().filter(e =>
       (!this._firstNameFilter() || e.firstName.toLowerCase().includes(this._firstNameFilter().toLowerCase())) &&
       (!this._lastNameFilter() || e.lastName.toLowerCase().includes(this._lastNameFilter().toLowerCase())) &&
-      (!this._cityFilter() || e.city.toLowerCase().includes(this._cityFilter().toLowerCase()))
+      (!this._cityFilter() || e.city.toLowerCase().includes(this._cityFilter().toLowerCase())) &&
+      (!filterId || e.skillSet?.some(skill => skill.id === filterId))
     );
   });
 
@@ -209,8 +211,8 @@ export class EmployeeStore {
     this._cityFilter.set(value);
   }
 
-  setQualificationFilter(value: string) {
-    this._qualificationIdFilter.set(value);
+  setQualificationFilter(id: number | null) {
+    this._qualificationIdFilter.set(id);
   }
 
   setFirstNameCreate(value:string) {

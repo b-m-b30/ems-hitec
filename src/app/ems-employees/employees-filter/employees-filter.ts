@@ -1,5 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {EmployeeStore} from '../employee-store';
+import {QualificationsStore} from '../../ems-qualifications/qualifications-store';
 
 @Component({
   selector: 'app-employees-filter',
@@ -8,12 +9,14 @@ import {EmployeeStore} from '../employee-store';
 })
 export class EmployeesFilter {
   private readonly store = inject(EmployeeStore);
+  private readonly qualificationsStore = inject(QualificationsStore);
 
   // expose store signals directly to the template
   firstName = this.store.firstNameFilter;
   lastName = this.store.lastNameFilter;
   city = this.store.cityFilter;
-  qualificationId = this.store.qualificationFilter;
+  qualifications = this.qualificationsStore.filteredQualifications;
+  qualificationFilter = this.store.qualificationFilter;
 
   onFirstNameChange(event: Event): void {
     this.store.setFirstNameFilter(
@@ -33,13 +36,13 @@ export class EmployeesFilter {
     );
   }
 
-  onQualificationChange(event: Event): void {
-    this.store.setQualificationFilter(
-      (event.target as HTMLSelectElement).value
-    );
+  setQualificationFilter(value: string) {
+    this.store.setQualificationFilter(value ? Number(value) : null);
   }
 
   onClearFilter(): void {
     this.store.clearFilter();
   }
+
+  protected readonly Number = Number;
 }

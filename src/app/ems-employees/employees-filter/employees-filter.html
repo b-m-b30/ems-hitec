@@ -32,13 +32,13 @@
       />
     </div>
 
-    <!-- Qualifikation -->
     <div class="textbox">
-      <select
-        [value]="qualificationId()"
-        (change)="onQualificationChange($event)"
-      >
-        <option value="">Qualifikation auswählen</option>
+      <label>Qualifikation</label>
+      <select [value]="qualificationFilter()" (change)="setQualificationFilter($event.target.value)">
+        <option value="">Alle</option>
+        @for (q of qualifications(); track q.id) {
+          <option [value]="q.id">{{ q.skill }}</option>
+        }
       </select>
     </div>
 
