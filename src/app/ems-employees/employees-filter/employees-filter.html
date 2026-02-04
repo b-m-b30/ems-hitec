@@ -34,13 +34,18 @@
 
     <div class="textbox">
       <label>Qualifikation</label>
-      <select [value]="qualificationFilter()" (change)="setQualificationFilter($event.target.value)">
+      <select
+        [value]="qualificationFilter() ?? ''"
+        (change)="setQualificationFilterFromEvent($event)">
+
         <option value="">Alle</option>
+
         @for (q of qualifications(); track q.id) {
           <option [value]="q.id">{{ q.skill }}</option>
         }
       </select>
     </div>
+
 
     <!-- Actions -->
     <div class="filter-actions">

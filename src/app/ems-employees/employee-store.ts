@@ -197,6 +197,7 @@ export class EmployeeStore {
     this._firstNameFilter.set('');
     this._lastNameFilter.set('');
     this._cityFilter.set('');
+    this._qualificationIdFilter.set(null);
   }
 
   setFirstNameFilter(value: string) {
