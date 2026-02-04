@@ -2,7 +2,7 @@
   <div class="text">Neuen Mitarbeiter erstellen</div>
 
   <form (submit)="$event.preventDefault()" class="filter-form">
-    <!-- First Name -->
+    <!-- Firstname -->
     <div class="textbox">
       <input
         type="text"
@@ -12,7 +12,7 @@
       />
     </div>
 
-    <!-- Last Name -->
+    <!-- Lastname -->
     <div class="textbox">
       <input
         type="text"
@@ -62,7 +62,6 @@
     </div>
   </form>
 
-  <!-- error message -->
   @if (errorMessage()) {
     <div class="employees-list-error">{{ errorMessage() }}</div>
   }

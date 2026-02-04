@@ -11,7 +11,6 @@ export class EmployeesFilter implements OnInit {
   private readonly store = inject(EmployeeStore);
   private readonly qualificationsStore = inject(QualificationsStore);
 
-  // expose store signals directly to the template
   firstName = this.store.firstNameFilter;
   lastName = this.store.lastNameFilter;
   city = this.store.cityFilter;
@@ -20,7 +19,7 @@ export class EmployeesFilter implements OnInit {
   qualificationFilter = this.store.qualificationFilter;
 
   ngOnInit() {
-    this.qualificationsStore.load(); // or startPoll() if you want auto-refresh
+    this.qualificationsStore.load();
   }
 
   onFirstNameChange(event: Event): void {

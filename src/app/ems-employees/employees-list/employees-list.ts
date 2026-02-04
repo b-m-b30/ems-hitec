@@ -12,7 +12,6 @@ export class EmployeesList implements OnInit {
 
   employees = this.employeeStore.filteredEmployees;
   errorMessage = this.employeeStore.error;
-  selectedEmployee = this.employeeStore.selectedEmployee;
 
   ngOnInit(): void {
     this.employeeStore.startPoll();
