@@ -35,16 +35,6 @@
       />
     </div>
 
-    <div class="textbox">
-      <label>Qualifikation</label>
-      <select [value]="qualificationId()" (change)="onQualificationChange($event)">
-        <option value="">Keine</option>
-        @for (qualification of qualifications(); track qualification.id) {
-          <option [value]="qualification.id">{{ qualification.skill }}</option>
-        }
-      </select>
-    </div>
-
     <!-- Submit -->
     <div class="filter-actions">
       <button type="button" class="search-btn" (click)="onSubmit()">

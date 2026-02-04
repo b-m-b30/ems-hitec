@@ -45,10 +45,6 @@
   background-color: #F8F9FA;
 }
 
-.employee-list-row--selected {
-  background: #EEF2FF;
-}
-
 /* cells */
 .employee-list-cell {
   padding: 16px 20px;

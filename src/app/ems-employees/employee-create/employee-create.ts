@@ -8,7 +8,7 @@ import {EmployeeRequestDTO} from '../employee-service';
   templateUrl: './employee-create.html',
   styleUrls: ['./employee-create.css'],
 })
-export class EmployeeCreateComponent {
+export class EmployeeCreate {
   private readonly store = inject(EmployeeStore);
   private readonly qualificationsStore = inject(QualificationsStore);
 
@@ -50,15 +50,14 @@ export class EmployeeCreateComponent {
       firstName: this.firstName(),
       lastName: this.lastName(),
       city: this.city(),
-      street: '',
-      postcode: '',
-      phone: '',
-      skillSet: this.qualificationId() ? [this.qualificationId()!] : [], // empty if null
+      street: '–',
+      postcode: '00000',
+      phone: '–',
+      skillSet: [],
     };
 
     this.store.create(dto);
 
-    // reset form
     this.store.setFirstNameCreate('');
     this.store.setLastNameCreate('');
     this.store.setCityCreate('');

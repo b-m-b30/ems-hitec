@@ -51,9 +51,6 @@ export class EmployeeStore {
     );
   });
 
-  readonly count = computed(() => this._employees().length);
-  readonly filteredCount = computed(() => this.filteredEmployees().length);
-
   private readonly api = inject(EmployeeService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -149,27 +146,6 @@ export class EmployeeStore {
         this._loading.set(false);
       },
     });
-  }
-
-  selectEmployee(id: number): void {
-    this._loading.set(true);
-
-    this.api.getById(id).subscribe({
-      next: employee => {
-        this._selectedEmployee.set(employee);
-        this._loading.set(false);
-      },
-      error: err => {
-        console.error(err);
-        this._error.set('Fehler beim Laden des Mitarbeiters.');
-        this._loading.set(false);
-      },
-    });
-  }
-
-  clearSelection(): void {
-    this._selectedEmployee.set(null);
-    this._employeeQualifications.set([]);
   }
 
   loadQualifications(employeeId: number): void {

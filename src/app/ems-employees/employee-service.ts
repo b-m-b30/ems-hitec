@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import {QualificationGetDTO} from '../ems-qualifications/qualifications-service';
 
 export interface EmployeeResponseDTO {
   id: number | null;
@@ -10,7 +11,7 @@ export interface EmployeeResponseDTO {
   postcode: string;
   city: string;
   phone: string;
-  skillSet: number[] | null;
+  skillSet: QualificationGetDTO[] | null;
 }
 
 export interface EmployeeRequestPutDTO {
@@ -20,7 +21,7 @@ export interface EmployeeRequestPutDTO {
   postcode: string | null;
   city: string | null;
   phone: string | null;
-  skillSet: number[] | null;
+  skillSet: QualificationGetDTO[] | null;
 }
 
 export interface EmployeeRequestDTO {
@@ -37,7 +38,7 @@ export interface EmployeeNameAndSkillDataDTO {
   id: number | null;
   lastName: string | null;
   firstName: string | null;
-  skillSet: number[] | null;
+  skillSet: QualificationGetDTO[] | null;
 }
 
 export interface EmployeeNameDataDTO {

@@ -18,14 +18,6 @@ export class EmployeesList implements OnInit {
     this.employeeStore.startPoll();
   }
 
-  onSelectEmployee(id: number): void {
-    this.employeeStore.selectEmployee(id);
-  }
-
-  onClearSelection(): void {
-    this.employeeStore.clearSelection();
-  }
-
   onClickDelete(id: number): void {
     this.employeeStore.delete(id);
   }
