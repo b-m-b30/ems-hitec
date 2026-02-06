@@ -1,5 +1,5 @@
 <app-modal [isOpen]="isModalOpen()" [title]="'Neuen Mitarbeiter erstellen'" (close)="closeModal()">
-  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="employee-form">
+  <form class="employee-form" (submit)="onSubmit(); $event.preventDefault()">
 
     <!-- Personal Details -->
     <section class="form-section">
@@ -7,17 +7,17 @@
 
       <div class="form-field">
         <label for="firstName">Vorname *</label>
-        <input id="firstName" type="text" formControlName="firstName" placeholder="Vorname"/>
+        <input id="firstName" type="text" placeholder="Vorname" [value]="firstName()" (input)="firstName.set($any($event.target).value)" />
       </div>
 
       <div class="form-field">
         <label for="lastName">Nachname *</label>
-        <input id="lastName" type="text" formControlName="lastName" placeholder="Nachname"/>
+        <input id="lastName" type="text" placeholder="Nachname" [value]="lastName()" (input)="lastName.set($any($event.target).value)" />
       </div>
 
       <div class="form-field">
         <label for="city">Ort *</label>
-        <input id="city" type="text" formControlName="city" placeholder="Ort"/>
+        <input id="city" type="text" placeholder="Ort" [value]="city()" (input)="city.set($any($event.target).value)" />
       </div>
     </section>
 
@@ -40,7 +40,7 @@
           @for (q of qualifications() ?? []; track q.id) {
             <option
               [value]="q.id"
-              [disabled]="(employeeForm.value.qualifications ?? []).includes(q.id)"
+              [disabled]="isQualificationSelected(q.id)"
             >
               {{ q.skill }}
             </option>
@@ -52,7 +52,7 @@
     <!-- Actions -->
     <div class="form-actions">
       <button type="button" class="cancel-button" (click)="closeModal()">Abbrechen</button>
-      <button type="submit" class="submit-button" [disabled]="employeeForm.invalid">Mitarbeiter erstellen</button>
+      <button type="submit" class="submit-button" [disabled]="!formValid()">Mitarbeiter erstellen</button>
     </div>
 
     <!-- Error -->

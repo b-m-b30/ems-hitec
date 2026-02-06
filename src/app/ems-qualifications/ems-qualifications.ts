@@ -1,27 +1,23 @@
-import { Component, inject, signal, effect } from '@angular/core';
+import { Component, inject, signal, effect, computed } from '@angular/core';
 import { QualificationsFilter } from "./qualifications-filter/qualifications-filter";
 import { QualificationsList } from "./qualifications-list/qualifications-list";
 import { QualificationsStore } from './qualifications-store';
 import { Modal } from '../modal/modal';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-ems-qualifications',
-  imports: [QualificationsFilter, QualificationsList, Modal, ReactiveFormsModule],
+  imports: [QualificationsFilter, QualificationsList, Modal],
   templateUrl: './ems-qualifications.html',
   styleUrl: './ems-qualifications.css',
 })
 export class EmsQualifications {
-
   private readonly qualificationStore = inject(QualificationsStore);
-  private readonly fb = inject(FormBuilder);
 
   isModalOpen = signal(false);
   isErrorModalOpen = signal(false);
 
-  qualificationForm = this.fb.group({
-    skill: ['', Validators.required],
-  });
+  skill = signal('');
+  skillValid = computed(() => this.skill().trim().length > 0);
 
   jsonImportText = signal('');
   errorMessage = this.qualificationStore.error;
@@ -40,7 +36,7 @@ export class EmsQualifications {
 
   closeModal() {
     this.isModalOpen.set(false);
-    this.qualificationForm.reset();
+    this.skill.set('');
     this.jsonImportText.set('');
   }
 
@@ -50,20 +46,16 @@ export class EmsQualifications {
   }
 
   onCreateQualification() {
-    if (this.qualificationForm.invalid) {
+    if (!this.skillValid()) {
       return;
     }
-
-    this.qualificationStore.create({
-      skill: this.qualificationForm.value.skill!
-    });
+    this.qualificationStore.create({ skill: this.skill() });
     this.closeModal();
   }
 
   onImportJson() {
     try {
       const data = JSON.parse(this.jsonImportText());
-
       if (Array.isArray(data)) {
         let importedCount = 0;
         for (const item of data) {
@@ -78,9 +70,7 @@ export class EmsQualifications {
           this.closeModal();
         }
       } else if (data.skill) {
-        this.qualificationForm.patchValue({
-          skill: data.skill
-        });
+        this.skill.set(data.skill);
         this.jsonImportText.set('');
       }
     } catch (e) {
@@ -93,5 +83,4 @@ export class EmsQualifications {
       this.qualificationStore.delete(id);
     }
   }
-
 }
