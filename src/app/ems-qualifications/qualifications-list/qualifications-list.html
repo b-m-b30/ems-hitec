@@ -16,9 +16,35 @@
 					<td class="qualifications-list-cell qualifications-list-cell--bezeichnung">{{quali.skill}}</td>
 					<td class="qualifications-list-cell qualifications-list-cell--aktionen">
 						<button class="qualifications-list-action-btn" (click)="onClickDelete(quali.id)">Delete</button>
+						<button class="qualifications-list-action-btn" (click)="onClickEdit(quali.id)">Edit</button>
 					</td>
 				</tr>
 			}
 		</tbody>
 	</table>
 </div>
+
+<app-modal
+	[isOpen]="isEditModalOpen()"
+	[title]="'Qualifikation bearbeiten'"
+	(close)="closeEditModal()"
+	>
+	<form [formGroup]="editForm" (ngSubmit)="onEditConfirm()" class="edit-form">
+            <h3>Qualifikationdetails</h3>
+            
+            <div class="form-field">
+                <label for="skill">Bezeichnung *</label>
+                <input 
+                    id="skill" 
+                    type="text" 
+                    formControlName="skill" 
+                    placeholder="Projektmanager"
+                />
+            </div>
+		<div class="form-actions">
+            <button type="button" (click)="closeEditModal()" class="cancel-button">Abbrechen</button>
+            <button type="submit" [disabled]="editForm.invalid" class="submit-button">Qualifikation aktualisieren</button>
+        </div>
+	</form>
+	
+</app-modal>
