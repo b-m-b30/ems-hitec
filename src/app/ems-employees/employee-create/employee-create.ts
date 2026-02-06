@@ -1,38 +1,34 @@
-import {Component, effect, inject, signal} from '@angular/core';
+import {Component, effect, inject, signal, computed} from '@angular/core';
 import {EmployeeStore} from '../employee-store';
 import {QualificationsStore} from '../../ems-qualifications/qualifications-store';
 import {EmployeeRequestDTO} from '../employee-service';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Modal} from '../../modal/modal';
 
 @Component({
   selector: 'app-employee-create',
-  imports: [Modal, ReactiveFormsModule],
+  imports: [Modal],
   templateUrl: './employee-create.html',
   styleUrls: ['./employee-create.css'],
 })
 export class EmployeeCreate {
-
   private readonly store = inject(EmployeeStore);
   private readonly qualificationsStore = inject(QualificationsStore);
-  private readonly fb = inject(FormBuilder);
 
   isModalOpen = signal(false);
   isErrorModalOpen = signal(false);
 
-  employeeForm = this.fb.group({
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    city: ['', Validators.required],
-    qualifications: [[] as number[]]
-  });
-
+  firstName = signal('');
+  lastName = signal('');
+  city = signal('');
   qualifications = this.qualificationsStore.filteredQualifications;
-
-  errorMessage = this.store.error;
-
   selectedQualifications = signal<{ id: number; skill: string }[]>([]);
 
+  firstNameValid = computed(() => this.firstName().trim().length > 0);
+  lastNameValid = computed(() => this.lastName().trim().length > 0);
+  cityValid = computed(() => this.city().trim().length > 0);
+  formValid = computed(() => this.firstNameValid() && this.lastNameValid() && this.cityValid());
+
+  errorMessage = this.store.error;
 
   constructor() {
     effect(() => {
@@ -48,25 +44,18 @@ export class EmployeeCreate {
 
   closeModal() {
     this.isModalOpen.set(false);
-    this.employeeForm.reset({firstName: '', lastName: '', city: '', qualifications: []});
+    this.firstName.set('');
+    this.lastName.set('');
+    this.city.set('');
     this.selectedQualifications.set([]);
-  }
-
-  closeErrorModal() {
-    this.isErrorModalOpen.set(false);
-    this.store.clearError();
   }
 
   onAddQualification(event: Event) {
     const target = event.target as HTMLSelectElement;
     if (!target?.value) return;
-
     const id = Number(target.value);
-    const current = this.employeeForm.value.qualifications!;
-    if (!current.includes(id)) {
-      this.employeeForm.patchValue({qualifications: [...current, id]});
-
-      const qual = this.qualificationsStore.filteredQualifications().find(q => q.id === id);
+    if (!this.selectedQualifications().some(q => q.id === id)) {
+      const qual = this.qualifications().find(q => q.id === id);
       if (qual) {
         this.selectedQualifications.update(list => [...list, qual]);
       }
@@ -75,27 +64,25 @@ export class EmployeeCreate {
   }
 
   removeQualification(id: number) {
-    const current = this.employeeForm.value.qualifications!;
-    this.employeeForm.patchValue({qualifications: current.filter(qId => qId !== id)});
-
     this.selectedQualifications.update(list => list.filter(q => q.id !== id));
   }
 
   onSubmit() {
-    if (this.employeeForm.invalid) return;
-
+    if (!this.formValid()) return;
     const dto: EmployeeRequestDTO = {
-      firstName: this.employeeForm.value.firstName!,
-      lastName: this.employeeForm.value.lastName!,
-      city: this.employeeForm.value.city!,
+      firstName: this.firstName(),
+      lastName: this.lastName(),
+      city: this.city(),
       street: '–',
       postcode: '00000',
       phone: '–',
-      skillSet: this.employeeForm.value.qualifications!,
+      skillSet: this.selectedQualifications().map(q => q.id),
     };
-
     this.store.create(dto);
-
     this.closeModal();
+  }
+
+  isQualificationSelected(qId: number): boolean {
+    return this.selectedQualifications().some(q => q.id === qId);
   }
 }
