@@ -1,6 +1,5 @@
 import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { QualificationGetDTO, QualificationPostDTO, QualificationsService } from './qualifications-service';
-import { QualificationsList } from './qualifications-list/qualifications-list';
 import { interval, startWith, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -65,7 +64,7 @@ export class QualificationsStore {
       next: data => this._qualifications.set(data),
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Polling')
+        this._error.set('Fehler beim Polling');
       }
     })
   }
@@ -129,6 +128,24 @@ export class QualificationsStore {
       error: err => {
         console.error(err);
         this._error.set('Fehler beim Löschen der Qualifikation. (Ist die Qualifikation noch Mitarbeitern zugewiesen?)');
+        this._loading.set(false);
+      }
+    })
+  }
+
+  edit(id: number, dto: QualificationPostDTO): void {
+    this._loading.set(true);
+
+    this.api.update(id, dto).subscribe({
+      next: updatedQualification => {
+        this._qualifications.update(qualifications =>
+          qualifications.map(q => q.id === id ? updatedQualification : q)
+        );
+        this._loading.set(false);
+      },
+      error: err => {
+        console.error(err);
+        this._error.set('Fehler beim Aktualisieren der Qualifikation.');
         this._loading.set(false);
       }
     })

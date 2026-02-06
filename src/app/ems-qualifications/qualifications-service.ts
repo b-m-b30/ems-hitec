@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface QualificationPostDTO {
   skill: string;
@@ -45,12 +46,11 @@ export class QualificationsService {
 
   delete(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url); //500 OK abfangen (Qualifikation an employee gebunden)
+    return this.http.delete<void>(url);
   }
 
   findEmployeesByQualification(id: number): Observable<EmployeesForAQualificationDTO> {
     const url = `${this.apiUrl}/${id}/employees`;
     return this.http.get<EmployeesForAQualificationDTO>(url);
   }
-  
 }

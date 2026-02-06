@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {QualificationGetDTO} from '../ems-qualifications/qualifications-service';
@@ -47,6 +47,11 @@ export interface EmployeeNameDataDTO {
   firstName: string | null;
 }
 
+export interface EmployeeQualificationDTO {
+  id: number;
+  skill: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -84,9 +89,9 @@ export class EmployeeService {
     return this.http.post<EmployeeResponseDTO>(this.apiUrl, employee);
   }
 
-  getEmployeeQualificationsById(id: number): Observable<EmployeeNameAndSkillDataDTO[]> {
+  getEmployeeQualificationsById(id: number): Observable<EmployeeQualificationDTO[]> {
     const url = `${this.apiUrl}/${id}/${this.qualificationsUrl}`;
-    return this.http.get<EmployeeNameAndSkillDataDTO[]>(url);
+    return this.http.get<EmployeeQualificationDTO[]>(url);
   }
 
   postEmployeeNameAndSkillDataById(id: number, skill: string): Observable<EmployeeNameAndSkillDataDTO> {

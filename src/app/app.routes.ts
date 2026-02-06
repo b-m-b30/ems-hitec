@@ -1,4 +1,3 @@
-
 import { authGuard } from './auth/auth-guard';
 import { EmsHome } from './ems-home/ems-home';
 import { LoginComponent } from './login/login';
@@ -6,7 +5,7 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
 	{ path: 'login', component: LoginComponent },
-	{ 
+	{
 		path: '',
 		component: EmsHome,
 		canActivate: [authGuard],
@@ -27,7 +26,11 @@ export const routes: Routes = [
 			{
 				path: 'qualifications',
 				loadComponent: () => import('./ems-qualifications/ems-qualifications').then(m => m.EmsQualifications),
+			},
+			{
+				path: 'assign-qualifications',
+				loadComponent: () => import('./ems-assign-qualifications/ems-assign-qualifications').then(m => m.EmsAssignQualifications),
 			}
-		] 
+		]
 	},
 ];
