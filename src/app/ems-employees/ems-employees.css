@@ -20,21 +20,31 @@
 }
 
 .create-employee-btn {
-  padding: 0 20px;
-  height: 40px;
+  height: 44px;
+  padding: 0 24px;
+  font-family: Archivo, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 15px;
   font-weight: 600;
-  border-radius: 6px;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #6C73F5 0%, #5A62E8 100%);
   border: none;
-  background-color: #2563EB;
-  color: #fff;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s;
-  margin-left: 16px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(108, 115, 245, 0.25);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .create-employee-btn:hover {
-  background-color: #1D4ED8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(108, 115, 245, 0.35);
+  background: linear-gradient(135deg, #5A62E8 0%, #4F56D6 100%);
+}
+
+.create-employee-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(108, 115, 245, 0.3);
 }
 
 .employees-content {
