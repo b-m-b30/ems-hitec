@@ -1,6 +1,6 @@
 import {computed, DestroyRef, inject, Injectable, signal} from '@angular/core';
 import {
-  EmployeeNameAndSkillDataDTO,
+  EmployeeQualificationDTO,
   EmployeeRequestDTO,
   EmployeeRequestPutDTO,
   EmployeeResponseDTO,
@@ -26,12 +26,9 @@ export class EmployeeStore {
   private readonly _cityFilter = signal('');
   private readonly _qualificationIdFilter = signal(<number | null>null);
 
-  private readonly _firstNameCreate = signal('');
-  private readonly _lastNameCreate = signal('');
-  private readonly _cityCreate = signal('');
-  private readonly _qualificationCreate = signal<number[]>([]);
-
   readonly employees = this._employees.asReadonly();
+  readonly selectedEmployee = this._selectedEmployee.asReadonly();
+  readonly employeeQualifications = this._employeeQualifications.asReadonly();
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
 
@@ -254,7 +251,7 @@ export class EmployeeStore {
     this._error.set(null);
   }
 
-  clearError(): void {
-    this._error.set(null);
+  clearSelection(): void {
+    this._selectedEmployee.set(null);
   }
 }
