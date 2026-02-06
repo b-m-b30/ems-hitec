@@ -3,17 +3,59 @@
   <p class="welcome-text">Schön, dass Sie wieder da sind! Hier haben Sie die volle Kontrolle über Ihre Mitarbeiter und deren Qualifikationen.</p>
 
   <div class="dashboard-grid">
-    <div class="dashboard-card" routerLink="/employees">
-      <h3>Mitarbeiter</h3>
-      <p>Verwalten Sie Ihre Belegschaft und fügen Sie neue Mitarbeiter hinzu.</p>
+    <div class="dashboard-card-wrapper">
+      <div class="dashboard-card" 
+            routerLink="/employees"
+            (mouseenter)="setHoveredCard('employees')"
+            (mouseleave)="setHoveredCard(null)">
+        <h3>Mitarbeiter</h3>
+        <p>Verwalten Sie Ihre Belegschaft und fügen Sie neue Mitarbeiter hinzu.</p>
+      </div>
+      <div class="card-dropdown" 
+            [class.expanded]="hoveredCard() === 'employees'" 
+            (mouseenter)="setHoveredCard('employees')" 
+            (mouseleave)="setHoveredCard(null)">
+        @if (employees().length > 0) {
+          <ul class="dropdown-list">
+            @for (employee of employees(); track employee.id) {
+              <li class="dropdown-item">{{ employee.firstName }} {{ employee.lastName }}</li>
+            }
+          </ul>
+        } @else {
+          <p class="dropdown-empty">Keine Mitarbeiter vorhanden</p>
+        }
+      </div>
     </div>
-    <div class="dashboard-card" routerLink="/qualifications">
-      <h3>Qualifikationen</h3>
-      <p>Definieren und pflegen Sie das Skill-Portfolio Ihres Unternehmens.</p>
+
+    <div class="dashboard-card-wrapper">
+      <div class="dashboard-card" 
+            routerLink="/qualifications"
+            (mouseenter)="setHoveredCard('qualifications')"
+            (mouseleave)="setHoveredCard(null)">
+        <h3>Qualifikationen</h3>
+        <p>Definieren und pflegen Sie das Skill-Portfolio Ihres Unternehmens.</p>
+      </div>
+      <div class="card-dropdown" 
+            [class.expanded]="hoveredCard() === 'qualifications'" 
+            (mouseenter)="setHoveredCard('qualifications')" 
+            (mouseleave)="setHoveredCard(null)">
+        @if (qualifications().length > 0) {
+          <ul class="dropdown-list">
+            @for (qualification of qualifications(); track qualification.id) {
+              <li class="dropdown-item">{{ qualification.skill }}</li>
+            }
+          </ul>
+        } @else {
+          <p class="dropdown-empty">Keine Qualifikationen vorhanden</p>
+        }
+      </div>
     </div>
-    <div class="dashboard-card" routerLink="/assign-qualifications">
-      <h3>Zuweisungen</h3>
-      <p>Verknüpfen Sie Ihre Mitarbeiter mit den passenden Qualifikationen für optimale Projektplanung.</p>
+
+    <div class="dashboard-card-wrapper">
+      <div class="dashboard-card" routerLink="/assign-qualifications">
+        <h3>Zuweisungen</h3>
+        <p>Verknüpfen Sie Ihre Mitarbeiter mit den passenden Qualifikationen für optimale Projektplanung.</p>
+      </div>
     </div>
   </div>
 </div>

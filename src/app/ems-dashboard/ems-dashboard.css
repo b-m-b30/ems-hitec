@@ -23,6 +23,10 @@ h1 {
   gap: 24px;
 }
 
+.dashboard-card-wrapper {
+  position: relative;
+}
+
 .dashboard-card {
   background: #FFFFFF;
   border: 1px solid #DEE1E6;
@@ -48,4 +52,69 @@ h1 {
   margin-bottom: 0;
   color: #565D6D;
   line-height: 1.6;
+}
+
+.card-dropdown {
+  position: absolute;
+  top: 70%;
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  border: 1px solid #DEE1E6;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+  z-index: 10;
+  padding: 0 24px;
+}
+
+.card-dropdown.expanded {
+  max-height: 400px;
+  opacity: 1;
+  padding: 16px 24px 24px;
+  overflow-y: auto;
+}
+
+.dropdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-item {
+  padding: 8px 0;
+  color: #565D6D;
+  border-bottom: 1px solid #F3F4F6;
+  animation: slideIn 0.3s ease-out;
+}
+
+.dropdown-item:hover {
+  background: #F9FAFB;
+  color: #171A1F;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-empty {
+  color: #9095A1;
+  font-style: italic;
+  margin: 0;
+  padding: 8px 0;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
