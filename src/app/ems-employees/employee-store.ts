@@ -8,6 +8,7 @@ import {
 } from './employee-service';
 import {interval, startWith, switchMap} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +56,7 @@ export class EmployeeStore {
 
   private readonly api = inject(EmployeeService);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly REFRESH_INTERVAL_MS = 30000;
+  private readonly REFRESH_INTERVAL_MS = environment.polling.refreshInterval;
   private _errorTimeout: any = null;
 
   load(): void {

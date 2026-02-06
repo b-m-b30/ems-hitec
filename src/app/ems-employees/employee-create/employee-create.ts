@@ -3,6 +3,7 @@ import {EmployeeStore} from '../employee-store';
 import {QualificationsStore} from '../../ems-qualifications/qualifications-store';
 import {EmployeeRequestDTO} from '../employee-service';
 import {Modal} from '../../modal/modal';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-employee-create',
@@ -73,9 +74,9 @@ export class EmployeeCreate {
       firstName: this.firstName(),
       lastName: this.lastName(),
       city: this.city(),
-      street: '–',
-      postcode: '00000',
-      phone: '–',
+      street: environment.defaults.employee.street,
+      postcode: environment.defaults.employee.postcode,
+      phone: environment.defaults.employee.phone,
       skillSet: this.selectedQualifications().map(q => q.id),
     };
     this.store.create(dto);

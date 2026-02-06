@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal, computed } from '@angular/core';
 import { Auth } from '../auth/auth';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'ems-login',
@@ -27,7 +28,7 @@ export class LoginComponent {
   onSignIn(): void {
     this.isLoading.set(true);
     this.errorMessage.set(null);
-    this.authService.createToken('john', 'secret').subscribe({
+    this.authService.createToken(environment.login.username, environment.login.password).subscribe({
       next: () => {
         this.isLoading.set(false);
         this.router.navigateByUrl('/home');
