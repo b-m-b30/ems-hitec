@@ -70,7 +70,7 @@ Die folgenden Services werden gestartet:
 #### 2.3 Passwort in der Anwendung hinterlegen
 
 1. Öffnen Sie die Datei `src/environments/environment.development.ts`
-2. Setzen Sie unter login.passwort das Passwort `'secret'` das kopierte App-Password ein:
+2. Setzen Sie unter `login.passwort` das kopierte App-Password ein:
 
 ```typescript
 login: {
