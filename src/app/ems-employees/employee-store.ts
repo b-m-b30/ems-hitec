@@ -38,13 +38,16 @@ export class EmployeeStore {
   readonly qualificationFilter = this._qualificationIdFilter.asReadonly();
 
   readonly filteredEmployees = computed(() => {
-    const filterId = this._qualificationIdFilter();
+    const first = this._firstNameFilter().toLowerCase().trim();
+    const last = this._lastNameFilter().toLowerCase().trim();
+    const city = this._cityFilter().toLowerCase().trim();
+    const qualId = this._qualificationIdFilter();
     return this._employees()
       .filter(e =>
-        (!this._firstNameFilter() || e.firstName.toLowerCase().includes(this._firstNameFilter().toLowerCase())) &&
-        (!this._lastNameFilter() || e.lastName.toLowerCase().includes(this._lastNameFilter().toLowerCase())) &&
-        (!this._cityFilter() || e.city.toLowerCase().includes(this._cityFilter().toLowerCase())) &&
-        (!filterId || e.skillSet?.some(skill => skill.id === filterId))
+        (!first || e.firstName.toLowerCase().includes(first)) &&
+        (!last || e.lastName.toLowerCase().includes(last)) &&
+        (!city || e.city.toLowerCase().includes(city)) &&
+        (!qualId || e.skillSet?.some(skill => skill.id === qualId))
       )
       .map(employee => ({
         ...employee,
