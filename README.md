@@ -141,6 +141,14 @@ Die Mitarbeiterverwaltung ermöglicht die vollständige Verwaltung der Mitarbeit
   - Pflichtfelder: Vorname, Nachname, Stadt
   - Mehrfachauswahl von Qualifikationen mit Chip-Darstellung
   - Dynamische Formularvalidierung mit `computed` Signals
+  - Visuell konsistente Modal-Dialoge mit Gradient-Buttons
+
+- **Mitarbeiter bearbeiten**:
+  - Bearbeiten-Button öffnet ein vorausgefülltes Modal mit aktuellen Werten
+  - Alle Felder werden automatisch mit den bestehenden Daten geladen
+  - Bearbeitung von: Vorname, Nachname, Straße, PLZ, Telefon, Stadt
+  - Verwaltung von Qualifikationen direkt im Bearbeitungsmodus
+  - Signal-basierte Echtzeit-Validierung aller Eingabefelder
 
 - **Filter- und Suchfunktionen**:
   - Filtern nach Vorname, Nachname oder Stadt
@@ -155,6 +163,8 @@ Die Mitarbeiterverwaltung ermöglicht die vollständige Verwaltung der Mitarbeit
 - **Sortierte Qualifikationen**: Alle Mitarbeiter-Qualifikationen werden alphabetisch sortiert angezeigt, um ein konsistentes Nutzererlebnis zu gewährleisten
 
 - **Fehlerbehandlung**: Automatische Anzeige und Ausblendung von Fehlermeldungen (5 Sekunden Timeout)
+
+- **Komponentenkommunikation**: Moderne Event-basierte Kommunikation zwischen Komponenten via `output()` Events und `viewChild()` References
 
 ### Qualifikationsverwaltung
 
@@ -232,8 +242,10 @@ Die Qualifikationszuweisungsansicht ermöglicht die Verknüpfung von Mitarbeiter
 - **Signals für State Management**: Nutzung von `signal()`, `computed()` und `effect()` für reaktive Datenverwaltung
 - **Stores**: Zentrale State-Verwaltung mit `EmployeeStore` und `QualificationsStore`
 - **Dependency Injection**: Moderne `inject()` Funktion statt Constructor Injection
-- **Environment Configuration**: Konfigurierbare API-URLs und Einstellungen über Environment-Files
-- **Responsive Design**: Mobile-first Ansatz mit modernem CSS
+- **Component Communication**: Event-basierte Kommunikation via `output()` Events und `viewChild()` für Eltern-Kind-Koordination
+- **Reactive Effects**: Automatische Datenaktualisierung durch `effect()` bei Zustandsänderungen
+- **Environment Configuration**: Konfigurierbare API-URLs, Polling-Intervalle und Default-Werte über Environment-Files
+- **Responsive Design**: Mobile-first Ansatz mit modernem CSS und konsistentem Design-System
 
 ### Code-Scaffolding
 
@@ -276,7 +288,10 @@ Die Tests nutzen das Vitest-Framework für schnelle und zuverlässige Unit-Tests
 - **Change Detection OnPush**: Optimierte Performance durch `ChangeDetectionStrategy.OnPush`
 - **Modern Control Flow**: Verwendung von `@if`, `@for`, `@switch` statt `*ngIf`, `*ngFor`
 - **inject() statt Constructor Injection**: Moderne Dependency Injection
-- **Type Safety**: Strikte TypeScript-Konfiguration für maximale Typsicherheit
+- **Component Communication**: `output()` Events für Child-to-Parent und `viewChild()` für Parent-to-Child Kommunikation
+- **Effect() für Side Effects**: Reaktive Datenaktualisierung bei Zustandsänderungen
+- **Type Safety**: Strikte TypeScript-Konfiguration für maximale Typsicherheit und API-Kompatibilität
+- **Konsistentes Design-System**: Wiederverwendbare CSS-Klassen und einheitliche Farbpalette (#6C73F5 Primary, #2563EB Secondary)
 
 ## Additional Resources
 
