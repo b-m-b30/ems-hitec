@@ -39,12 +39,19 @@ export class EmployeeStore {
 
   readonly filteredEmployees = computed(() => {
     const filterId = this._qualificationIdFilter();
-    return this._employees().filter(e =>
-      (!this._firstNameFilter() || e.firstName.toLowerCase().includes(this._firstNameFilter().toLowerCase())) &&
-      (!this._lastNameFilter() || e.lastName.toLowerCase().includes(this._lastNameFilter().toLowerCase())) &&
-      (!this._cityFilter() || e.city.toLowerCase().includes(this._cityFilter().toLowerCase())) &&
-      (!filterId || e.skillSet?.some(skill => skill.id === filterId))
-    );
+    return this._employees()
+      .filter(e =>
+        (!this._firstNameFilter() || e.firstName.toLowerCase().includes(this._firstNameFilter().toLowerCase())) &&
+        (!this._lastNameFilter() || e.lastName.toLowerCase().includes(this._lastNameFilter().toLowerCase())) &&
+        (!this._cityFilter() || e.city.toLowerCase().includes(this._cityFilter().toLowerCase())) &&
+        (!filterId || e.skillSet?.some(skill => skill.id === filterId))
+      )
+      .map(employee => ({
+        ...employee,
+        skillSet: employee.skillSet
+          ? [...employee.skillSet].sort((a, b) => a.skill.localeCompare(b.skill))
+          : employee.skillSet
+      }));
   });
 
   private readonly api = inject(EmployeeService);
