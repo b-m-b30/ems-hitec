@@ -28,7 +28,9 @@ export class EmsQualifications {
 
   constructor() {
     effect(() => {
-      this.isErrorModalOpen.set(!!this.errorMessage());
+      if (this.errorMessage()) {
+        this.isErrorModalOpen.set(true);
+      }
     });
   }
 
@@ -62,7 +64,6 @@ export class EmsQualifications {
     try {
       const data = JSON.parse(this.jsonImportText());
 
-      // Handle array of qualifications
       if (Array.isArray(data)) {
         let importedCount = 0;
         for (const item of data) {
@@ -76,9 +77,7 @@ export class EmsQualifications {
           this.jsonImportText.set('');
           this.closeModal();
         }
-      }
-      // Handle single qualification object
-      else if (data.skill) {
+      } else if (data.skill) {
         this.qualificationForm.patchValue({
           skill: data.skill
         });

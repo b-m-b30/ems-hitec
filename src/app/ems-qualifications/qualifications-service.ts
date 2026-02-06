@@ -32,62 +32,25 @@ export class QualificationsService {
   private readonly http = inject(HttpClient);
 
   getAll(): Observable<QualificationGetDTO[]> {
-    return this.http.get<QualificationGetDTO[]>(this.apiUrl).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.get<QualificationGetDTO[]>(this.apiUrl);
   }
 
   create(qualification: QualificationPostDTO): Observable<QualificationGetDTO> {
-    return this.http.post<QualificationGetDTO>(this.apiUrl, qualification).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.post<QualificationGetDTO>(this.apiUrl, qualification);
   }
 
   update(id: number, qualification: QualificationPostDTO): Observable<QualificationGetDTO> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.put<QualificationGetDTO>(url, qualification).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.put<QualificationGetDTO>(url, qualification);
   }
 
   delete(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.delete<void>(url);
   }
 
   findEmployeesByQualification(id: number): Observable<EmployeesForAQualificationDTO> {
     const url = `${this.apiUrl}/${id}/employees`;
-    return this.http.get<EmployeesForAQualificationDTO>(url).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      console.error('An error occurred:', error.error);
-      return throwError(() => new Error('Verbindungsfehler: Server nicht erreichbar.'));
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-
-      let errorMessage = 'Unbekannter Fehler';
-      if (error.error && typeof error.error === 'string') {
-        if (error.status === 500 && error.error === 'OK') {
-          errorMessage = 'Interner Serverfehler (Backend Unhandled Exception)';
-        } else if (error.status === 401 && error.error === 'OK') {
-          errorMessage = 'Nicht autorisiert. Bitte Administrator konktaktieren oder neu einloggen.';
-        } else {
-          errorMessage = error.error;
-        }
-      } else if (error.error && error.error.message) {
-        errorMessage = error.error.message;
-      } else {
-        errorMessage = error.statusText || 'Server-Fehler';
-      }
-
-      return throwError(() => new Error(`Server Fehler (${error.status}): ${errorMessage}`));
-    }
+    return this.http.get<EmployeesForAQualificationDTO>(url);
   }
 }

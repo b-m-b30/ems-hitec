@@ -12,8 +12,10 @@
 
     <div class="login-box">
       @if (errorMessage()) {
-        <div class="error-message" (click)="onClearError()" style="cursor: pointer;" title="Klicken zum Ausblenden">
-          {{ errorMessage() }}
+        <div class="login-error-box" (click)="clearError()" style="cursor: pointer;" title="Klicken zum Ausblenden">
+          <p class="login-error-message">
+            {{ errorMessage() }}
+          </p>
         </div>
       }
 

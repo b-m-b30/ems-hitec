@@ -3,7 +3,7 @@
 		<thead class="qualifications-list-thead">
 			<tr class="qualifications-list-header-row">
 				<th class="qualifications-list-header qualifications-list-header--select"></th>
-				<th class="qualifications-list-header qualifications-list-header--qualifikation">Qualifikation</th>
+				<th class="qualifications-list-header qualifications-list-header--bezeichnung">Bezeichnung</th>
 				<th class="qualifications-list-header qualifications-list-header--aktionen">Aktionen</th>
 			</tr>
 		</thead>
@@ -13,7 +13,7 @@
 					<td class="qualifications-list-cell qualifications-list-cell--select">
 						<input type="checkbox" (change)="onSelectChange($event, quali.id)">
 					</td>
-					<td class="qualifications-list-cell qualifications-list-cell--qualifikation">{{quali.skill}}</td>
+					<td class="qualifications-list-cell qualifications-list-cell--bezeichnung">{{quali.skill}}</td>
 					<td class="qualifications-list-cell qualifications-list-cell--aktionen">
 						<button class="qualifications-list-action-btn" (click)="onClickDelete(quali.id)">Delete</button>
 					</td>
