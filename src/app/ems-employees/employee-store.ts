@@ -1,5 +1,5 @@
 import {computed, DestroyRef, inject, Injectable, signal} from '@angular/core';
-import {EmployeeResponseDTO, EmployeeRequestDTO, EmployeeRequestPutDTO, EmployeeService, EmployeeNameAndSkillDataDTO
+import {EmployeeResponseDTO, EmployeeRequestDTO, EmployeeRequestPutDTO, EmployeeService, EmployeeNameAndSkillDataDTO, EmployeeQualificationDTO
 } from './employee-service';
 import {interval, startWith, switchMap} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -11,7 +11,7 @@ export class EmployeeStore {
   private readonly _employees = signal<EmployeeResponseDTO[]>([]);
   private readonly _selectedEmployee = signal<EmployeeResponseDTO | null>(null);
   private readonly _employeeQualifications =
-    signal<EmployeeNameAndSkillDataDTO[]>([]);
+    signal<EmployeeQualificationDTO[]>([]);
 
   private readonly _loading = signal<boolean>(false);
   private readonly _error = signal<string | null>(null);
@@ -42,6 +42,18 @@ export class EmployeeStore {
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly REFRESH_INTERVAL_MS = 30000;
+  private _errorTimeout: any;
+
+  private setError(message: string): void {
+    this._error.set(message);
+    if (this._errorTimeout) {
+      clearTimeout(this._errorTimeout);
+    }
+    this._errorTimeout = setTimeout(() => {
+      this._error.set(null);
+      this._errorTimeout = null;
+    }, 5000);
+  }
 
   load(): void {
     if (this._loading()) {
@@ -52,12 +64,15 @@ export class EmployeeStore {
     this._error.set(null);
 
     this.api.getAll().subscribe({
-      next: data => this._employees.set(data),
+      next: data => {
+        this._employees.set(data);
+        this._loading.set(false);
+      },
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Laden der Mitarbeiter.');
+        this.setError(`Fehler beim Laden der Mitarbeiter: ${err.message || err.statusText || 'Unbekannter Fehler'}`);
+        this._loading.set(false);
       },
-      complete: () => this._loading.set(false),
     });
   }
 
@@ -72,7 +87,7 @@ export class EmployeeStore {
         next: data => this._employees.set(data),
         error: err => {
           console.error(err);
-          this._error.set('Fehler beim Polling der Mitarbeiter.');
+          this.setError('Fehler beim Polling der Mitarbeiter.');
         },
       });
   }
@@ -87,7 +102,7 @@ export class EmployeeStore {
       },
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Erstellen des Mitarbeiters.');
+        this.setError(`Fehler beim Erstellen des Mitarbeiters: ${err.message || 'Unbekannter Fehler'}`);
         this._loading.set(false);
       },
     });
@@ -110,7 +125,7 @@ export class EmployeeStore {
       },
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Aktualisieren des Mitarbeiters.');
+        this.setError('Fehler beim Aktualisieren des Mitarbeiters.');
         this._loading.set(false);
       },
     });
@@ -129,7 +144,7 @@ export class EmployeeStore {
       },
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Löschen des Mitarbeiters.');
+        this.setError('Fehler beim Löschen des Mitarbeiters.');
         this._loading.set(false);
       },
     });
@@ -138,6 +153,9 @@ export class EmployeeStore {
   selectEmployee(id: number): void {
     this._loading.set(true);
 
+    // Also load qualifications to ensure we have the correct list (sync issue fix)
+    this.loadQualifications(id);
+
     this.api.getById(id).subscribe({
       next: employee => {
         this._selectedEmployee.set(employee);
@@ -145,7 +163,7 @@ export class EmployeeStore {
       },
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Laden des Mitarbeiters.');
+        this.setError('Fehler beim Laden des Mitarbeiters.');
         this._loading.set(false);
       },
     });
@@ -161,7 +179,7 @@ export class EmployeeStore {
       next: data => this._employeeQualifications.set(data),
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Laden der Qualifikationen.');
+        this.setError('Fehler beim Laden der Qualifikationen des Mitarbeiters.');
       },
     });
   }
@@ -171,14 +189,18 @@ export class EmployeeStore {
       .postEmployeeNameAndSkillDataById(employeeId, skill)
       .subscribe({
         next: qualification => {
-          this._employeeQualifications.update(list => [
-            ...list,
-            qualification,
-          ]);
+          this.selectEmployee(employeeId);
         },
         error: err => {
           console.error(err);
-          this._error.set('Fehler beim Hinzufügen der Qualifikation.');
+          const msg = (err.message || '').toLowerCase();
+          // Be extra broad with the check for "already has it"
+          if (msg.includes('already') && msg.includes('qualification')) {
+             this.selectEmployee(employeeId);
+             this._error.set(null);
+          } else {
+             this.setError(`Fehler beim Hinzufügen der Qualifikation: ${err.message || 'Unbekannter Fehler'}`);
+          }
         },
       });
   }
@@ -188,13 +210,12 @@ export class EmployeeStore {
       .deleteEmployeeQualificationById(employeeId, qualificationId)
       .subscribe({
         next: () => {
-          this._employeeQualifications.update(list =>
-            list.filter(q => q.id !== qualificationId)
-          );
+          // Refresh the selected employee to update skillSet, which drives the UI lists
+          this.selectEmployee(employeeId);
         },
         error: err => {
           console.error(err);
-          this._error.set('Fehler beim Entfernen der Qualifikation.');
+          this.setError(`Fehler beim Entfernen der Qualifikation: ${err.message || 'Unbekannter Fehler'}`);
         },
       });
   }
@@ -205,5 +226,9 @@ export class EmployeeStore {
 
   clearFilter(): void {
     this._filterText.set('');
+  }
+
+  clearError(): void {
+    this._error.set(null);
   }
 }

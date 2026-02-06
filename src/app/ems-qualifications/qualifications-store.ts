@@ -64,7 +64,7 @@ export class QualificationsStore {
       next: data => this._qualifications.set(data),
       error: err => {
         console.error(err);
-        this._error.set('Fehler beim Polling')
+        this._error.set('Fehler beim Polling');
       }
     })
   }

@@ -9,38 +9,49 @@
     <div class="login-title">
       <span class="ems-title">EMS</span>
     </div>
-    @if (!usernameLogin()) {
-      <h2 class="login-heading">Anmelden</h2>
-      <p class="login-desc">Bitte melden Sie sich über Single Sign-On an,<br>um auf den Employee Management Service zuzugreifen.</p>
-      <button class="login-btn" (click)="onSignIn()" [disabled]="isLoading()">
-        @if (!isLoading()) {
-          <span>Login mit SSO</span>
-        } @else {
-          <span>Bitte warten...</span>
-        }
-      </button>
-      <button type="button" class="login-btn-alt" (click)="usernameLogin.set(true)">
-        Mit Benutzername anmelden
-      </button>
-    } @else {
-      <h2 class="login-heading">Anmelden mit Benutzername</h2>
-      <p class="login-desc">Geben Sie Ihren Benutzernamen und Ihr Passwort ein, um auf den Employee Management Service zuzugreifen.</p>
-      <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onUserSignIn()">
-        <label for="username" class="login-label">Benutzername</label>
-        <input type="text" id="username" class="login-input" placeholder="Benutzername eingeben" formControlName="username" />
-        <label for="password" class="login-label">Passwort</label>
-        <input type="password" id="password" class="login-input" placeholder="Passwort eingeben" formControlName="password" />
-        <button type="submit" class="login-btn" [disabled]="isLoading() || loginForm.invalid">
+
+    <div class="login-box">
+      @if (errorMessage()) {
+        <div class="login-error-box" (click)="clearError()" style="cursor: pointer;" title="Klicken zum Ausblenden">
+          <p class="login-error-message">
+            {{ errorMessage() }}
+          </p>
+        </div>
+      }
+
+      @if (!usernameLogin()) {
+        <h2 class="login-heading">Anmelden</h2>
+        <p class="login-desc">Bitte melden Sie sich über Single Sign-On an,<br>um auf den Employee Management Service zuzugreifen.</p>
+        <button class="login-btn" (click)="onSignIn()" [disabled]="isLoading()">
           @if (!isLoading()) {
-            <span>Anmelden</span>
+            <span>Login mit SSO</span>
           } @else {
             <span>Bitte warten...</span>
           }
         </button>
-      </form>
-      <button type="button" class="login-btn-alt" (click)="usernameLogin.set(false)">
-        Zurück zur SSO-Anmeldung
-      </button>
-    }
+        <button type="button" class="login-btn-alt" (click)="usernameLogin.set(true)">
+          Mit Benutzername anmelden
+        </button>
+      } @else {
+        <h2 class="login-heading">Anmelden mit Benutzername</h2>
+        <p class="login-desc">Geben Sie Ihren Benutzernamen und Ihr Passwort ein, um auf den Employee Management Service zuzugreifen.</p>
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onUserSignIn()">
+          <label for="username" class="login-label">Benutzername</label>
+          <input type="text" id="username" class="login-input" placeholder="Benutzername eingeben" formControlName="username" />
+          <label for="password" class="login-label">Passwort</label>
+          <input type="password" id="password" class="login-input" placeholder="Passwort eingeben" formControlName="password" />
+          <button type="submit" class="login-btn" [disabled]="isLoading() || loginForm.invalid">
+            @if (!isLoading()) {
+              <span>Anmelden</span>
+            } @else {
+              <span>Bitte warten...</span>
+            }
+          </button>
+        </form>
+        <button type="button" class="login-btn-alt" (click)="usernameLogin.set(false)">
+          Zurück zur SSO-Anmeldung
+        </button>
+      }
+    </div>
   </div>
 </section>

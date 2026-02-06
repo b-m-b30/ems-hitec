@@ -13,7 +13,7 @@
 					<td class="qualifications-list-cell qualifications-list-cell--select">
 						<input type="checkbox" (change)="onSelectChange($event, quali.id)">
 					</td>
-					<td class="qualifications-list-cell qualifications-list-cell--bezeichnung">Bezeichnung {{quali.skill}}</td>
+					<td class="qualifications-list-cell qualifications-list-cell--bezeichnung">{{quali.skill}}</td>
 					<td class="qualifications-list-cell qualifications-list-cell--aktionen">
 						<button class="qualifications-list-action-btn" (click)="onClickDelete(quali.id)">Delete</button>
 						<button class="qualifications-list-action-btn" (click)="onClickEdit(quali.id)">Edit</button>
