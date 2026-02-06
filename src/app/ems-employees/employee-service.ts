@@ -1,7 +1,8 @@
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {QualificationGetDTO} from '../ems-qualifications/qualifications-service';
+import { environment } from '../../environments/environment';
 
 export interface EmployeeResponseDTO {
   id: number | null;
@@ -21,7 +22,7 @@ export interface EmployeeRequestPutDTO {
   postcode: string | null;
   city: string | null;
   phone: string | null;
-  skillSet: QualificationGetDTO[] | null;
+  skillSet: number[] | null;
 }
 
 export interface EmployeeRequestDTO {
@@ -56,7 +57,7 @@ export interface EmployeeQualificationDTO {
   providedIn: 'root',
 })
 export class EmployeeService {
-  private readonly apiUrl = 'http://localhost:8089/employees';
+  private readonly apiUrl = `${environment.api.employees}/employees`;
   private readonly qualificationsUrl = 'qualifications';
 
   private readonly http = inject(HttpClient);

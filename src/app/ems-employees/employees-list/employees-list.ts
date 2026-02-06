@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, output} from '@angular/core';
 import {EmployeeStore} from '../employee-store';
 
 @Component({
@@ -12,6 +12,8 @@ export class EmployeesList implements OnInit {
 
   employees = this.employeeStore.filteredEmployees;
   errorMessage = this.employeeStore.error;
+  
+  editEmployee = output<number>();
 
   ngOnInit(): void {
     this.employeeStore.startPoll();
@@ -23,5 +25,9 @@ export class EmployeesList implements OnInit {
 
   onClearError(): void {
     this.employeeStore.clearError();
+  }
+
+  onClickEdit(id: number): void {
+    this.editEmployee.emit(id);
   }
 }

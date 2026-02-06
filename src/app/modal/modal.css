@@ -26,3 +26,14 @@
     font-weight: 700;
     color: #171A1F;
 }
+
+.modal-close {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.7rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #610413;
+}

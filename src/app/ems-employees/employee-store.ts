@@ -8,6 +8,7 @@ import {
 } from './employee-service';
 import {interval, startWith, switchMap} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -38,17 +39,24 @@ export class EmployeeStore {
     const last = this._lastNameFilter().toLowerCase().trim();
     const city = this._cityFilter().toLowerCase().trim();
     const qualId = this._qualificationIdFilter();
-    return this._employees().filter(e =>
-      (!first || e.firstName.toLowerCase().includes(first)) &&
-      (!last || e.lastName.toLowerCase().includes(last)) &&
-      (!city || e.city.toLowerCase().includes(city)) &&
-      (!qualId || e.skillSet?.some(skill => skill.id === qualId))
-    );
+    return this._employees()
+      .filter(e =>
+        (!first || e.firstName.toLowerCase().includes(first)) &&
+        (!last || e.lastName.toLowerCase().includes(last)) &&
+        (!city || e.city.toLowerCase().includes(city)) &&
+        (!qualId || e.skillSet?.some(skill => skill.id === qualId))
+      )
+      .map(employee => ({
+        ...employee,
+        skillSet: employee.skillSet
+          ? [...employee.skillSet].sort((a, b) => a.skill.localeCompare(b.skill))
+          : employee.skillSet
+      }));
   });
 
   private readonly api = inject(EmployeeService);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly REFRESH_INTERVAL_MS = 30000;
+  private readonly REFRESH_INTERVAL_MS = environment.polling.refreshInterval;
   private _errorTimeout: any = null;
 
   load(): void {
@@ -107,6 +115,26 @@ export class EmployeeStore {
       error: err => {
         console.error(err);
         this.setError('Fehler beim Löschen des Mitarbeiters.');
+        this._loading.set(false);
+      }
+    });
+  }
+
+  update(id: number, dto: EmployeeRequestPutDTO): void {
+    this._loading.set(true);
+    this.api.putById(id, dto).subscribe({
+      next: updatedEmployee => {
+        this._employees.update(list =>
+          list.map(e => e.id === id ? updatedEmployee : e)
+        );
+        if (this._selectedEmployee()?.id === id) {
+          this._selectedEmployee.set(updatedEmployee);
+        }
+        this._loading.set(false);
+      },
+      error: err => {
+        console.error(err);
+        this.setError('Fehler beim Aktualisieren des Mitarbeiters.');
         this._loading.set(false);
       }
     });

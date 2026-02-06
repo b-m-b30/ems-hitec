@@ -8,8 +8,9 @@
 
   <div class="employees-content">
     <app-employees-filter></app-employees-filter>
-    <app-employees-list></app-employees-list>
+    <app-employees-list (editEmployee)="onEditEmployee($event)"></app-employees-list>
 
     <app-employee-create #employeeCreate></app-employee-create>
+    <app-employees-edit></app-employees-edit>
   </div>
 </div>
