@@ -70,7 +70,7 @@ Die folgenden Services werden gestartet:
 #### 2.3 Passwort in der Anwendung hinterlegen
 
 1. Öffnen Sie die Datei `src/app/login/login.ts`
-2. Ersetzen Sie in Zeile 44 das Passwort `'secret'` durch das kopierte App-Password:
+2. Ersetzen Sie in Zeile 32 das Passwort `'secret'` durch das kopierte App-Password:
 
 ```typescript
 this.authService.createToken('john', 'IHR-KOPIERTES-PASSWORT').subscribe({
