@@ -50,11 +50,6 @@ export class EmployeeCreate {
     this.selectedQualifications.set([]);
   }
 
-  closeErrorModal() {
-    this.isErrorModalOpen.set(false);
-    this.store.clearError();
-  }
-
   onAddQualification(event: Event) {
     const target = event.target as HTMLSelectElement;
     if (!target?.value) return;

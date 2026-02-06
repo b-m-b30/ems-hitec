@@ -1,7 +1,6 @@
 <app-modal [isOpen]="isModalOpen()" [title]="'Neuen Mitarbeiter erstellen'" (close)="closeModal()">
   <form class="employee-form" (submit)="onSubmit(); $event.preventDefault()">
 
-    <!-- Personal Details -->
     <section class="form-section">
       <h3>Persönliche Daten</h3>
 
@@ -21,7 +20,6 @@
       </div>
     </section>
 
-    <!-- Qualifications -->
     <section class="form-section">
       <h3>Qualifikationen</h3>
 
@@ -49,13 +47,11 @@
       </div>
     </section>
 
-    <!-- Actions -->
     <div class="form-actions">
       <button type="button" class="cancel-button" (click)="closeModal()">Abbrechen</button>
       <button type="submit" class="submit-button" [disabled]="!formValid()">Mitarbeiter erstellen</button>
     </div>
 
-    <!-- Error -->
     @if (errorMessage()) {
       <div class="employees-list-error">{{ errorMessage() }}</div>
     }

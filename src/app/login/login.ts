@@ -17,11 +17,9 @@ export class LoginComponent {
   protected readonly isLoading = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
 
-  // Signal Form
   username = signal('');
   password = signal('');
 
-  // Validierung
   usernameValid = computed(() => this.username().trim().length > 0);
   passwordValid = computed(() => this.password().trim().length > 0);
   formValid = computed(() => this.usernameValid() && this.passwordValid());
