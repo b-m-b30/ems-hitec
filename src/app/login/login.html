@@ -35,12 +35,12 @@
       } @else {
         <h2 class="login-heading">Anmelden mit Benutzername</h2>
         <p class="login-desc">Geben Sie Ihren Benutzernamen und Ihr Passwort ein, um auf den Employee Management Service zuzugreifen.</p>
-        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onUserSignIn()">
+        <form class="login-form" (submit)="onUserSignIn(); $event.preventDefault()">
           <label for="username" class="login-label">Benutzername</label>
-          <input type="text" id="username" class="login-input" placeholder="Benutzername eingeben" formControlName="username" />
+          <input type="text" id="username" class="login-input" placeholder="Benutzername eingeben" [value]="username()" (input)="username.set($event.target.value)" />
           <label for="password" class="login-label">Passwort</label>
-          <input type="password" id="password" class="login-input" placeholder="Passwort eingeben" formControlName="password" />
-          <button type="submit" class="login-btn" [disabled]="isLoading() || loginForm.invalid">
+          <input type="password" id="password" class="login-input" placeholder="Passwort eingeben" [value]="password()" (input)="password.set($event.target.value)" />
+          <button type="submit" class="login-btn" [disabled]="isLoading() || !formValid()">
             @if (!isLoading()) {
               <span>Anmelden</span>
             } @else {

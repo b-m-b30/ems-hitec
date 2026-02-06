@@ -10,24 +10,22 @@
 </button>
 
 <app-modal [isOpen]="isModalOpen()" [title]="'Qualifikation erstellen'" (close)="closeModal()">
-    <form [formGroup]="qualificationForm" (ngSubmit)="onCreateQualification()" class="qualification-form">
+    <form class="qualification-form" (submit)="onCreateQualification(); $event.preventDefault()">
         <section class="form-section">
             <h3>Qualifikationdetails</h3>
-
             <div class="form-field">
                 <label for="skill">Bezeichnung *</label>
                 <input
                     id="skill"
                     type="text"
-                    formControlName="skill"
                     placeholder="Projektmanager"
+                    [value]="skill()"
+                    (input)="skill.set($any($event.target).value)"
                 />
             </div>
         </section>
-
         <section class="form-section">
             <h3>Datenimport (JSON)</h3>
-
             <div class="form-field">
                 <label for="json-import">JSON-Import</label>
                 <textarea
@@ -38,13 +36,11 @@
                     placeholder='Fügen Sie hier JSON-Daten ein, z.B. {"skill": "Projektmanager"} oder [{"skill": "skill1"}, {"skill": "skill2"}]'
                 ></textarea>
             </div>
-
             <button type="button" (click)="onImportJson()" class="import-button">Importieren</button>
         </section>
-
         <div class="form-actions">
             <button type="button" (click)="closeModal()" class="cancel-button">Abbrechen</button>
-            <button type="submit" [disabled]="qualificationForm.invalid" class="submit-button">Qualifikation erstellen</button>
+            <button type="submit" [disabled]="!skillValid()" class="submit-button">Qualifikation erstellen</button>
         </div>
     </form>
 </app-modal>
