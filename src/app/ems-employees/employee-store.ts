@@ -120,6 +120,26 @@ export class EmployeeStore {
     });
   }
 
+  update(id: number, dto: EmployeeRequestPutDTO): void {
+    this._loading.set(true);
+    this.api.putById(id, dto).subscribe({
+      next: updatedEmployee => {
+        this._employees.update(list =>
+          list.map(e => e.id === id ? updatedEmployee : e)
+        );
+        if (this._selectedEmployee()?.id === id) {
+          this._selectedEmployee.set(updatedEmployee);
+        }
+        this._loading.set(false);
+      },
+      error: err => {
+        console.error(err);
+        this.setError('Fehler beim Aktualisieren des Mitarbeiters.');
+        this._loading.set(false);
+      }
+    });
+  }
+
   setFirstNameFilter(value: string): void {
     this._firstNameFilter.set(value);
   }

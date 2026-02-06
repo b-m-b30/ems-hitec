@@ -22,7 +22,7 @@ export interface EmployeeRequestPutDTO {
   postcode: string | null;
   city: string | null;
   phone: string | null;
-  skillSet: QualificationGetDTO[] | null;
+  skillSet: number[] | null;
 }
 
 export interface EmployeeRequestDTO {

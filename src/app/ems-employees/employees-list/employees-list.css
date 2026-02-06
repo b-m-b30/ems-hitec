@@ -74,6 +74,17 @@
   border-color: #F87171;
 }
 
+.employee-list-action-btn--edit {
+  color: #2563EB;
+  border-color: #DBEAFE;
+}
+
+.employee-list-action-btn--edit:hover {
+  background: #DBEAFE;
+  border-color: #BFDBFE;
+  color: #1D4ED8;
+}
+
 .employees-list-error {
   margin-top: 16px;
   padding: 12px 16px;

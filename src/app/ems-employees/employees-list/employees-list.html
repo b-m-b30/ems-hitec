@@ -31,6 +31,9 @@
             <button class="employee-list-action-btn" (click)="$event.stopPropagation(); onClickDelete(employee.id!)">
               Delete
             </button>
+            <button class="employee-list-action-btn employee-list-action-btn--edit" (click)="$event.stopPropagation(); onClickEdit(employee.id!)">
+              Edit
+            </button>
           </td>
         </tr>
       }

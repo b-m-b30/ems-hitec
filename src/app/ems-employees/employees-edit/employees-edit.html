@@ -1,0 +1,68 @@
+<app-modal [isOpen]="isModalOpen()" [title]="'Mitarbeiter bearbeiten'" (close)="closeModal()">
+    <form class="employee-form" (submit)="onSubmit(); $event.preventDefault()">
+        <section class="form-section">
+            <h3>Persönliche Daten</h3>
+            <div class="form-field">
+                <label for="firstName">Vorname *</label>
+                <input id="firstName" type="text" placeholder="Vorname" [value]="firstName()" (input)="firstName.set($any($event.target).value)" />
+            </div>
+
+            <div class="form-field">
+                <label for="lastName">Nachname *</label>
+                <input id="lastName" type="text" placeholder="Nachname" [value]="lastName()" (input)="lastName.set($any($event.target).value)" />
+            </div>
+
+            <div class="form-field">
+                <label for="street">Straße *</label>
+                <input id="street" type="text" placeholder="Straße" [value]="street()" (input)="street.set($any($event.target).value)" />
+            </div>
+
+            <div class="form-field">
+                <label for="postcode">Postleitzahl *</label>
+                <input id="postcode" type="text" placeholder="Postleitzahl" [value]="postcode()" (input)="postcode.set($any($event.target).value)" />
+            </div>
+
+            <div class="form-field">
+                <label for="city">Ort *</label>
+                <input id="city" type="text" placeholder="Ort" [value]="city()" (input)="city.set($any($event.target).value)" />
+            </div>
+
+            <div class="form-field">
+                <label for="phone">Telefonnummer *</label>
+                <input id="phone" type="text" placeholder="Telefonnummer" [value]="phone()" (input)="phone.set($any($event.target).value)" />
+            </div>
+        </section>
+
+        <section class="form-section">
+            <h3>Qualifikationen</h3>
+            
+            <div class="selected-qualifications">
+                @for (qual of selectedQualifications(); track qual.id) {
+                    <span class="qualification-chip">
+                        {{ qual.skill }}
+                        <button type="button" (click)="removeQualification(qual.id)">×</button>
+                    </span>
+                }
+            </div>
+
+            <div class="form-field">
+                <select (change)="onAddQualification($event)">
+                    <option value="">Qualifikation hinzufügen...</option>
+                    @for (q of qualifications(); track q.id) {
+                        <option
+                            [value]="q.id"
+                            [disabled]="isQualificationSelected(q.id)"
+                        >
+                            {{ q.skill }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </section>
+
+        <div class="form-actions">
+            <button type="button" class="cancel-button" (click)="closeModal()">Abbrechen</button>
+            <button type="submit" class="submit-button" [disabled]="!formValid()">Mitarbeiter aktualisieren</button>
+        </div>
+    </form>
+</app-modal>
