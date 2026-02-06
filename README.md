@@ -1,6 +1,6 @@
 # EmsHitec - Employee Management System
 
-EmsHitec ist ein webbasiertes Employee Management System zur Verwaltung von Mitarbeitern und deren Qualifikationen. Die Anwendung wurde mit Angular 21 entwickelt und nutzt Authentik als Identity Provider für die Authentifizierung.
+EmsHitec ist ein webbasiertes Employee Management System zur Verwaltung von Mitarbeitern und deren Qualifikationen. Die Anwendung wurde mit Angular 21 entwickelt und nutzt moderne Angular-Features wie Signals, Standalone Components und Signal-basierte Forms. Authentik dient als Identity Provider für die Authentifizierung.
 
 ## Inhaltsverzeichnis
 
@@ -69,11 +69,14 @@ Die folgenden Services werden gestartet:
 
 #### 2.3 Passwort in der Anwendung hinterlegen
 
-1. Öffnen Sie die Datei `src/app/login/login.ts`
-2. Ersetzen Sie in Zeile 32 das Passwort `'secret'` durch das kopierte App-Password:
+1. Öffnen Sie die Datei `src/environments/environment.development.ts`
+2. Setzen Sie unter login.passwort das Passwort `'secret'` das kopierte App-Password ein:
 
 ```typescript
-this.authService.createToken('john', 'IHR-KOPIERTES-PASSWORT').subscribe({
+login: {
+        username: 'john',
+        password: 'IHR_KOPIERTES_APP_PASSWORT',
+    },
 ```
 
 ### 3. Frontend-Anwendung starten
@@ -99,7 +102,7 @@ Nach dem Start der Frontend-Anwendung öffnen Sie `http://localhost:4200` im Bro
 #### Option A: SSO-Login (wenn App-Password hinterlegt)
 
 1. Klicken Sie auf **Login mit SSO**
-2. Die Anmeldung erfolgt automatisch mit dem in `login.ts` hinterlegten App-Password
+2. Die Anmeldung erfolgt automatisch mit dem in `environment.development.ts` hinterlegten App-Password
 
 #### Option B: Manuelle Anmeldung
 
@@ -115,61 +118,79 @@ Nach dem Start der Frontend-Anwendung öffnen Sie `http://localhost:4200` im Bro
 
 Das Dashboard dient als zentrale Übersichtsseite und bietet schnellen Zugriff auf die Hauptfunktionen:
 
-- **Mitarbeiter**: Direkte Navigation zur Mitarbeiterverwaltung
-- **Qualifikationen**: Zugriff auf die Qualifikationsverwaltung
-- **Zuweisungen**: Öffnet die Qualifikationszuweisungsansicht
+- **Interaktive Kartenansicht**: 
+  - Mitarbeiter-Karte mit Hover-Effekt zur Anzeige aller Mitarbeiter
+  - Qualifikations-Karte mit Hover-Effekt zur Anzeige aller Qualifikationen
+  - Animierte Rollout-Listen beim Hovern über die Karten
+- **Direktnavigation**: Klick auf eine Karte navigiert zur entsprechenden Verwaltungsseite
+- **Echtzeit-Datenvorschau**: Aktuelle Mitarbeiter und Qualifikationen werden direkt auf dem Dashboard angezeigt
 
 ### Mitarbeiterverwaltung
 
-Die Mitarbeiterverwaltung ermöglicht die vollständige Verwaltung der Mitarbeiterdaten.
+Die Mitarbeiterverwaltung ermöglicht die vollständige Verwaltung der Mitarbeiterdaten mit modernen Signal-basierten Forms.
 
 #### Funktionen
 
 - **Mitarbeiterübersicht**: Tabellarische Darstellung aller Mitarbeiter mit folgenden Informationen:
-  - ID
-  - Vorname
-  - Nachname
-  - Straße
-  - Postleitzahl
+  - Vorname und Nachname
   - Stadt
-  - Telefonnummer
-  - Zugewiesene Qualifikationen (Skill-IDs)
+  - Zugewiesene Qualifikationen (alphabetisch sortiert)
+  
+- **Mitarbeiter erstellen**:
+  - Signal-basierte Formularvalidierung in Echtzeit
+  - Pflichtfelder: Vorname, Nachname, Stadt
+  - Mehrfachauswahl von Qualifikationen mit Chip-Darstellung
+  - Dynamische Formularvalidierung mit `computed` Signals
 
-- **Mitarbeiter auswählen**: Auswahl eines Mitarbeiters durch Klick auf eine Tabellenzeile
+- **Filter- und Suchfunktionen**:
+  - Filtern nach Vorname, Nachname oder Stadt
+  - Filtern nach spezifischer Qualifikation
+  - Kombinierbare Filter für präzise Suche
+  - "Filter zurücksetzen"-Funktion
 
 - **Mitarbeiter löschen**: Entfernen einzelner Mitarbeiter über die Lösch-Schaltfläche
 
-- **Automatische Aktualisierung**: Die Mitarbeiterliste wird automatisch per Polling aktualisiert, um Änderungen in Echtzeit anzuzeigen
+- **Automatische Aktualisierung**: Die Mitarbeiterliste wird automatisch alle 30 Sekunden per Polling aktualisiert
 
-- **Fehlerbehandlung**: Anzeige von Fehlermeldungen bei Verbindungsproblemen oder fehlgeschlagenen Operationen
+- **Sortierte Qualifikationen**: Alle Mitarbeiter-Qualifikationen werden alphabetisch sortiert angezeigt, um ein konsistentes Nutzererlebnis zu gewährleisten
+
+- **Fehlerbehandlung**: Automatische Anzeige und Ausblendung von Fehlermeldungen (5 Sekunden Timeout)
 
 ### Qualifikationsverwaltung
 
-Die Qualifikationsverwaltung ermöglicht die Pflege des Skill-Portfolios des Unternehmens.
+Die Qualifikationsverwaltung ermöglicht die Pflege des Skill-Portfolios des Unternehmens mit modernen UI-Komponenten.
 
 #### Funktionen
 
 - **Qualifikationsübersicht**: Liste aller verfügbaren Qualifikationen mit:
-  - ID
+  - Checkbox für Mehrfachauswahl
   - Bezeichnung (Skill-Name)
+  - Aktionen (Bearbeiten/Löschen)
 
 - **Qualifikation hinzufügen**:
-  - Klick auf **Qualifikation hinzufügen** öffnet ein Modal
+  - Klick auf **Qualifikation hinzufügen** öffnet ein modales Formular
   - Eingabe der Qualifikationsbezeichnung (Pflichtfeld)
   - Bestätigung über **Qualifikation erstellen**
+
+- **Qualifikation bearbeiten**:
+  - Bearbeiten-Button öffnet ein visuell optimiertes Modal
+  - Inline-Bearbeitung der Qualifikationsbezeichnung
+  - Konsistentes Design mit dem Rest der Anwendung
 
 - **JSON-Import**:
   - Import einzelner Qualifikationen: `{"skill": "Projektmanager"}`
   - Import mehrerer Qualifikationen: `[{"skill": "Skill1"}, {"skill": "Skill2"}]`
   - Automatische Validierung des JSON-Formats
 
-- **Qualifikationen auswählen**: Mehrfachauswahl über Checkboxen
-
-- **Qualifikationen löschen**: 
-  - Auswahl mehrerer Qualifikationen
+- **Mehrfachauswahl und Batch-Operationen**: 
+  - Auswahl mehrerer Qualifikationen über Checkboxen
   - Batch-Löschung über **Ausgewählte Qualifikationen löschen**
 
-- **Filterung**: Durchsuchen der Qualifikationsliste nach spezifischen Skills
+- **Filterung**: 
+  - Echtzeit-Durchsuchen der Qualifikationsliste
+  - "Filter zurücksetzen"-Funktion für schnellen Reset
+
+- **Automatische Aktualisierung**: Polling-basierte Aktualisierung der Qualifikationsliste
 
 ### Qualifikationszuweisung
 
@@ -196,6 +217,23 @@ Die Qualifikationszuweisungsansicht ermöglicht die Verknüpfung von Mitarbeiter
 - **Dynamische Aktualisierung**: Änderungen werden sofort in beiden Listen reflektiert
 
 ## Entwicklung
+
+### Technologie-Stack
+
+- **Angular 21**: Moderne Web-Framework mit Signals und Standalone Components
+- **TypeScript**: Typ-sichere Entwicklung
+- **RxJS**: Reaktive Programmierung für asynchrone Operationen
+- **Signal Forms**: Moderne, signal-basierte Formularimplementierung ohne Reactive Forms
+- **Standalone Components**: Modulfreie Architektur für bessere Performance
+- **Change Detection OnPush**: Optimierte Performance durch gezielte Change Detection
+
+### Architektur-Highlights
+
+- **Signals für State Management**: Nutzung von `signal()`, `computed()` und `effect()` für reaktive Datenverwaltung
+- **Stores**: Zentrale State-Verwaltung mit `EmployeeStore` und `QualificationsStore`
+- **Dependency Injection**: Moderne `inject()` Funktion statt Constructor Injection
+- **Environment Configuration**: Konfigurierbare API-URLs und Einstellungen über Environment-Files
+- **Responsive Design**: Mobile-first Ansatz mit modernem CSS
 
 ### Code-Scaffolding
 
@@ -227,12 +265,18 @@ Ausführen der Unit-Tests mit Vitest:
 
 ```bash
 ng test
-
-```bash
-ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Die Tests nutzen das Vitest-Framework für schnelle und zuverlässige Unit-Tests.
+
+### Best Practices
+
+- **Signals verwenden**: Bevorzugt `signal()`, `computed()` und `effect()` für State Management
+- **Standalone Components**: Alle Components sind standalone (kein `NgModule` erforderlich)
+- **Change Detection OnPush**: Optimierte Performance durch `ChangeDetectionStrategy.OnPush`
+- **Modern Control Flow**: Verwendung von `@if`, `@for`, `@switch` statt `*ngIf`, `*ngFor`
+- **inject() statt Constructor Injection**: Moderne Dependency Injection
+- **Type Safety**: Strikte TypeScript-Konfiguration für maximale Typsicherheit
 
 ## Additional Resources
 
