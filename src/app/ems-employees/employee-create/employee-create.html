@@ -35,7 +35,7 @@
       <div class="form-field">
         <select (change)="onAddQualification($event)">
           <option value="">Qualifikation hinzufügen...</option>
-          @for (q of qualifications() ?? []; track q.id) {
+          @for (q of qualifications(); track q.id) {
             <option
               [value]="q.id"
               [disabled]="isQualificationSelected(q.id)"
