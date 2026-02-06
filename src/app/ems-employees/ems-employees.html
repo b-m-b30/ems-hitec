@@ -1,10 +1,15 @@
 <div class="employees-page">
-  <h1 class="employees-heading">Mitarbeiter Übersicht</h1>
-  <div class="employees-filter">
-    <app-employees-filter></app-employees-filter>
+  <div class="employees-header">
+    <h1 class="employees-heading">Mitarbeiter Übersicht</h1>
+    <button class="create-employee-btn" (click)="employeeCreate.openModal()">
+      Neuen Mitarbeiter erstellen
+    </button>
   </div>
 
-  <div class="employees-list">
+  <div class="employees-content">
+    <app-employees-filter></app-employees-filter>
     <app-employees-list></app-employees-list>
+
+    <app-employee-create #employeeCreate></app-employee-create>
   </div>
 </div>

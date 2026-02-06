@@ -2,31 +2,32 @@
   <table class="employee-list-table">
     <thead class="employee-list-thead">
     <tr class="employee-list-header-row">
-      <th class="employee-list-header employee-list-header--select"></th>
-      <th class="employee-list-header employee-list-header--vorname">Vorname</th>
-      <th class="employee-list-header employee-list-header--nachname">Nachname</th>
+      <th class="employee-list-header">Vorname</th>
+      <th class="employee-list-header">Nachname</th>
       <th class="employee-list-header">Ort</th>
-      <th class="employee-list-header employee-list-header--aktionen">Aktionen</th>
+      <th class="employee-list-header">Qualifikationen</th>
+      <th class="employee-list-header">Aktionen</th>
     </tr>
     </thead>
 
     <tbody class="employee-list-tbody">
       @for (employee of employees(); track employee.id) {
-        <tr class="employee-list-row"
-            (click)="onSelectEmployee(employee.id!)"
-            [class.employee-list-row--selected]="selectedEmployee()?.id === employee.id">
-          <td class="employee-list-cell employee-list-cell--select">
-            <input
-              type="radio"
-              name="selectedEmployee"
-              [checked]="selectedEmployee()?.id === employee.id"
-              (click)="$event.stopPropagation(); onSelectEmployee(employee.id!)"
-            />
-          </td>
-          <td class="employee-list-cell employee-list-cell--vorname">{{ employee.firstName }}</td>
-          <td class="employee-list-cell employee-list-cell--nachname">{{ employee.lastName }}</td>
+        <tr class="employee-list-row">
+          <td class="employee-list-cell">{{ employee.firstName }}</td>
+          <td class="employee-list-cell">{{ employee.lastName }}</td>
           <td class="employee-list-cell">{{ employee.city }}</td>
-          <td class="employee-list-cell employee-list-cell--aktionen">
+          <td class="employee-list-cell">
+            @if (employee.skillSet?.length) {
+              <ul class="employee-skill-list">
+                @for (skill of employee.skillSet; track skill.id) {
+                  <li>{{ skill.skill }}</li>
+                }
+              </ul>
+            } @else {
+              —
+            }
+          </td>
+          <td class="employee-list-cell">
             <button class="employee-list-action-btn" (click)="$event.stopPropagation(); onClickDelete(employee.id!)">
               Delete
             </button>

@@ -12,18 +12,9 @@ export class EmployeesList implements OnInit {
 
   employees = this.employeeStore.filteredEmployees;
   errorMessage = this.employeeStore.error;
-  selectedEmployee = this.employeeStore.selectedEmployee;
 
   ngOnInit(): void {
     this.employeeStore.startPoll();
-  }
-
-  onSelectEmployee(id: number): void {
-    this.employeeStore.selectEmployee(id);
-  }
-
-  onClearSelection(): void {
-    this.employeeStore.clearSelection();
   }
 
   onClickDelete(id: number): void {

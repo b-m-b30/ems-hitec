@@ -1,4 +1,3 @@
-/* corrected container (flows inside .employees-page) */
 .container {
   width: 100%;
   background: #fff;
@@ -11,7 +10,6 @@
   gap: 8px;
 }
 
-/* small visual tweak to match Qualifications page spacing */
 .text {
   font-family: Archivo, sans-serif;
   font-size: 20px;
@@ -21,9 +19,63 @@
   margin-bottom: 8px;
 }
 
-/* keep your filter-form/grid styles — they were good */
-.filter-form { /* keep your existing definition */ }
-.textbox { /* keep */ }
-.textbox input, .textbox select { /* keep */ }
-.filter-actions { /* keep */ }
-.reset-btn, .search-btn { /* keep */ }
+.filter-form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  align-items: end;
+}
+
+.textbox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.textbox label {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #565D6DFF;
+  margin-bottom: 2px;
+}
+
+.textbox input,
+.textbox select {
+  width: 100%;
+  height: 41px;
+  padding: 0 12px;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #DEE1E6FF;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.filter-actions {
+  grid-column: 1 / span 4;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.reset-btn,
+.search-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 41px;
+  padding: 0 18px;
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}

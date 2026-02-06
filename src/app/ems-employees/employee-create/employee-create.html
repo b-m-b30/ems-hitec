@@ -1,0 +1,63 @@
+<app-modal [isOpen]="isModalOpen()" [title]="'Neuen Mitarbeiter erstellen'" (close)="closeModal()">
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="employee-form">
+
+    <!-- Personal Details -->
+    <section class="form-section">
+      <h3>Persönliche Daten</h3>
+
+      <div class="form-field">
+        <label for="firstName">Vorname *</label>
+        <input id="firstName" type="text" formControlName="firstName" placeholder="Vorname"/>
+      </div>
+
+      <div class="form-field">
+        <label for="lastName">Nachname *</label>
+        <input id="lastName" type="text" formControlName="lastName" placeholder="Nachname"/>
+      </div>
+
+      <div class="form-field">
+        <label for="city">Ort *</label>
+        <input id="city" type="text" formControlName="city" placeholder="Ort"/>
+      </div>
+    </section>
+
+    <!-- Qualifications -->
+    <section class="form-section">
+      <h3>Qualifikationen</h3>
+
+      <div class="selected-qualifications">
+        @for (qual of selectedQualifications(); track qual.id) {
+          <span class="qualification-chip">
+            {{ qual.skill }}
+            <button type="button" (click)="removeQualification(qual.id)">×</button>
+          </span>
+        }
+      </div>
+
+      <div class="form-field">
+        <select (change)="onAddQualification($event)">
+          <option value="">Qualifikation hinzufügen...</option>
+          @for (q of qualifications() ?? []; track q.id) {
+            <option
+              [value]="q.id"
+              [disabled]="(employeeForm.value.qualifications ?? []).includes(q.id)"
+            >
+              {{ q.skill }}
+            </option>
+          }
+        </select>
+      </div>
+    </section>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button type="button" class="cancel-button" (click)="closeModal()">Abbrechen</button>
+      <button type="submit" class="submit-button" [disabled]="employeeForm.invalid">Mitarbeiter erstellen</button>
+    </div>
+
+    <!-- Error -->
+    @if (errorMessage()) {
+      <div class="employees-list-error">{{ errorMessage() }}</div>
+    }
+  </form>
+</app-modal>

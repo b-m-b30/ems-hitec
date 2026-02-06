@@ -1,30 +1,64 @@
 <div class="container">
   <div class="text">Filter</div>
+
   <form class="filter-form" (submit)="$event.preventDefault()">
+    <!-- Firstname -->
     <div class="textbox">
-      <input type="text" placeholder="Vorname" />
+      <input
+        type="text"
+        placeholder="Vorname"
+        [value]="firstName()"
+        (input)="onFirstNameChange($event)"
+      />
     </div>
+
+    <!-- Lastname -->
     <div class="textbox">
-      <input type="text" placeholder="Nachname" />
+      <input
+        type="text"
+        placeholder="Nachname"
+        [value]="lastName()"
+        (input)="onLastNameChange($event)"
+      />
     </div>
+
+    <!-- City -->
     <div class="textbox">
-      <input type="text" placeholder="Ort" />
+      <input
+        type="text"
+        placeholder="Ort"
+        [value]="city()"
+        (input)="onCityChange($event)"
+      />
     </div>
+
+    <!-- Qualifications -->
     <div class="textbox">
-      <select>
-        <option>Qualifikation auswählen</option>
+      <label>Qualifikation</label>
+      <select
+        [value]="qualificationFilter() ?? ''"
+        (change)="setQualificationFilterFromEvent($event)">
+
+        <option value="">Alle</option>
+
+        @for (q of qualifications(); track q.id) {
+          <option [value]="q.id">{{ q.skill }}</option>
+        }
       </select>
     </div>
 
     <div class="filter-actions">
-      <button type="button" class="reset-btn">
-        <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+      <button
+        type="button"
+        class="reset-btn"
+        (click)="onClearFilter()"
+      >
+        <svg class="icon" viewBox="0 0 16 16" width="16" height="16">
           <path d="M8 3v5h5" stroke="#565D6D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
           <path d="M3.93 6.07A5 5 0 1 1 8 13" stroke="#565D6D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         </svg>
         Filter zurücksetzen
       </button>
-      <button type="submit" class="search-btn">Suchen</button>
     </div>
   </form>
 </div>

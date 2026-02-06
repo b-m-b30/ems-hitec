@@ -1,5 +1,10 @@
 import {computed, DestroyRef, inject, Injectable, signal} from '@angular/core';
-import {EmployeeResponseDTO, EmployeeRequestDTO, EmployeeRequestPutDTO, EmployeeService, EmployeeNameAndSkillDataDTO, EmployeeQualificationDTO
+import {
+  EmployeeNameAndSkillDataDTO,
+  EmployeeRequestDTO,
+  EmployeeRequestPutDTO,
+  EmployeeResponseDTO,
+  EmployeeService
 } from './employee-service';
 import {interval, startWith, switchMap} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -15,28 +20,35 @@ export class EmployeeStore {
 
   private readonly _loading = signal<boolean>(false);
   private readonly _error = signal<string | null>(null);
-  private readonly _filterText = signal<string>('');
+
+  private readonly _firstNameFilter = signal('');
+  private readonly _lastNameFilter = signal('');
+  private readonly _cityFilter = signal('');
+  private readonly _qualificationIdFilter = signal(<number | null>null);
+
+  private readonly _firstNameCreate = signal('');
+  private readonly _lastNameCreate = signal('');
+  private readonly _cityCreate = signal('');
+  private readonly _qualificationCreate = signal<number[]>([]);
 
   readonly employees = this._employees.asReadonly();
-  readonly selectedEmployee = this._selectedEmployee.asReadonly();
-  readonly employeeQualifications = this._employeeQualifications.asReadonly();
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
-  readonly filterText = this._filterText.asReadonly();
+
+  readonly firstNameFilter = this._firstNameFilter.asReadonly();
+  readonly lastNameFilter = this._lastNameFilter.asReadonly();
+  readonly cityFilter = this._cityFilter.asReadonly();
+  readonly qualificationFilter = this._qualificationIdFilter.asReadonly();
 
   readonly filteredEmployees = computed(() => {
-    const filter = this._filterText().toLowerCase().trim();
-    if (!filter) {
-      return this._employees();
-    }
-
+    const filterId = this._qualificationIdFilter();
     return this._employees().filter(e =>
-      `${e.firstName} ${e.lastName}`.toLowerCase().includes(filter)
+      (!this._firstNameFilter() || e.firstName.toLowerCase().includes(this._firstNameFilter().toLowerCase())) &&
+      (!this._lastNameFilter() || e.lastName.toLowerCase().includes(this._lastNameFilter().toLowerCase())) &&
+      (!this._cityFilter() || e.city.toLowerCase().includes(this._cityFilter().toLowerCase())) &&
+      (!filterId || e.skillSet?.some(skill => skill.id === filterId))
     );
   });
-
-  readonly count = computed(() => this._employees().length);
-  readonly filteredCount = computed(() => this.filteredEmployees().length);
 
   private readonly api = inject(EmployeeService);
   private readonly destroyRef = inject(DestroyRef);
@@ -87,7 +99,7 @@ export class EmployeeStore {
         next: data => this._employees.set(data),
         error: err => {
           console.error(err);
-          this.setError('Fehler beim Polling der Mitarbeiter.');
+          this._error.set('Fehler beim Polling der Mitarbeiter.');
         },
       });
   }
@@ -150,6 +162,13 @@ export class EmployeeStore {
     });
   }
 
+  clearFilter(): void {
+    this._firstNameFilter.set('');
+    this._lastNameFilter.set('');
+    this._cityFilter.set('');
+    this._qualificationIdFilter.set(null);
+  }
+  
   selectEmployee(id: number): void {
     this._loading.set(true);
 
@@ -169,11 +188,18 @@ export class EmployeeStore {
     });
   }
 
-  clearSelection(): void {
-    this._selectedEmployee.set(null);
-    this._employeeQualifications.set([]);
+  setFirstNameFilter(value: string) {
+    this._firstNameFilter.set(value);
   }
 
+  setLastNameFilter(value: string) {
+    this._lastNameFilter.set(value);
+  }
+
+  setCityFilter(value: string) {
+    this._cityFilter.set(value);
+  }
+  
   loadQualifications(employeeId: number): void {
     this.api.getEmployeeQualificationsById(employeeId).subscribe({
       next: data => this._employeeQualifications.set(data),
@@ -220,12 +246,12 @@ export class EmployeeStore {
       });
   }
 
-  setFilter(text: string): void {
-    this._filterText.set(text);
+  setQualificationFilter(id: number | null) {
+    this._qualificationIdFilter.set(id);
   }
 
-  clearFilter(): void {
-    this._filterText.set('');
+  clearError(): void {
+    this._error.set(null);
   }
 
   clearError(): void {
