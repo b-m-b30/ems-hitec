@@ -39,8 +39,6 @@
 
 <div>
   @if (errorMessage()) {
-    <div class="employees-list-error" (click)="onClearError()" style="cursor: pointer;" title="Klicken zum Ausblenden">
-      {{ errorMessage() }}
-    </div>
+    <div class="employees-list-error">{{ errorMessage() }}</div>
   }
 </div>

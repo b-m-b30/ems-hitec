@@ -13,13 +13,13 @@
     <form [formGroup]="qualificationForm" (ngSubmit)="onCreateQualification()" class="qualification-form">
         <section class="form-section">
             <h3>Qualifikationdetails</h3>
-
+            
             <div class="form-field">
-                <label for="skill">Qualifikation *</label>
-                <input
-                    id="skill"
-                    type="text"
-                    formControlName="skill"
+                <label for="skill">Bezeichnung *</label>
+                <input 
+                    id="skill" 
+                    type="text" 
+                    formControlName="skill" 
                     placeholder="Projektmanager"
                 />
             </div>
@@ -27,15 +27,15 @@
 
         <section class="form-section">
             <h3>Datenimport (JSON)</h3>
-
+            
             <div class="form-field">
                 <label for="json-import">JSON-Import</label>
-                <textarea
-                    id="json-import"
-                    [value]="jsonImportText()"
+                <textarea 
+                    id="json-import" 
+                    [value]="jsonImportText()" 
                     (input)="jsonImportText.set($any($event.target).value)"
                     rows="4"
-                    placeholder='Fügen Sie hier JSON-Daten ein, z.B. {"skill": "Projektmanager"} oder [{"skill": "skill1"}, {"skill": "skill2"}]'
+                    placeholder='Fügen Sie hier JSON-Daten ein, z.B. {"bezeichnung": "Projektmanager"} oder [{"skill": "skill1"}, {"skill": "skill2"}]'
                 ></textarea>
             </div>
 

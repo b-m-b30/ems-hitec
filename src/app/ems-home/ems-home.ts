@@ -17,7 +17,7 @@ export class EmsHome {
   onProfileClick() {}
   onMitarbeiterClick() {this.router.navigateByUrl('/employees')}
   onQualificationsClick() {this.router.navigateByUrl('/qualifications')}
-  onZuweisenClick() {this.router.navigateByUrl('/assign-qualifications')}
+  onZuweisenClick() {}
 
   get currentYear(): number {
     return new Date().getFullYear();
