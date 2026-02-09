@@ -27,7 +27,9 @@
         @for (qual of selectedQualifications(); track qual.id) {
           <span class="qualification-chip">
             {{ qual.skill }}
-            <button type="button" (click)="removeQualification(qual.id)">×</button>
+            <button type="button" (click)="removeQualification(qual.id)">
+              <lucide-angular [img]="XIcon" class="qualification-remove" size="12px"></lucide-angular>
+            </button>
           </span>
         }
       </div>

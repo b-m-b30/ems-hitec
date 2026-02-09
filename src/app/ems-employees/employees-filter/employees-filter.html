@@ -53,11 +53,8 @@
         class="reset-btn"
         (click)="onClearFilter()"
       >
-        <svg class="icon" viewBox="0 0 16 16" width="16" height="16">
-          <path d="M8 3v5h5" stroke="#565D6D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M3.93 6.07A5 5 0 1 1 8 13" stroke="#565D6D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        </svg>
-        Filter zurücksetzen
+        <lucide-angular [img]="RotateCcwIcon" class="action-icon" size="16px" />
+        <span>Filter zurücksetzen</span>
       </button>
     </div>
   </form>

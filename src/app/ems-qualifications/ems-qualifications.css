@@ -42,6 +42,8 @@ h1 {
     box-shadow: 0 2px 6px rgba(108, 115, 245, 0.25);
     white-space: nowrap;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
 }
 
 .add-qualification-button:hover {
@@ -278,4 +280,11 @@ h1 {
 .error-close-button:hover {
     background: #F8F9FA;
     border-color: #BCC1CA;
+}
+
+.add-qualification-icon {
+    margin-left: 8px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
 }

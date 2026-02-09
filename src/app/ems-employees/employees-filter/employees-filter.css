@@ -79,3 +79,14 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
+.action-icon {
+  color: #565D6DFF;
+  transition: 0.4s;
+}
+
+.reset-btn:hover .action-icon,
+.search-btn:hover .action-icon {
+  color: #171A1F;
+
+}

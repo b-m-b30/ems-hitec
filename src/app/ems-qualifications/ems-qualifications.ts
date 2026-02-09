@@ -3,14 +3,17 @@ import { QualificationsFilter } from "./qualifications-filter/qualifications-fil
 import { QualificationsList } from "./qualifications-list/qualifications-list";
 import { QualificationsStore } from './qualifications-store';
 import { Modal } from '../modal/modal';
+import { LucideAngularModule, PlusIcon } from 'lucide-angular';
 
 @Component({
   selector: 'app-ems-qualifications',
-  imports: [QualificationsFilter, QualificationsList, Modal],
+  imports: [QualificationsFilter, QualificationsList, Modal, LucideAngularModule],
   templateUrl: './ems-qualifications.html',
   styleUrl: './ems-qualifications.css',
 })
 export class EmsQualifications {
+  readonly PlusIcon = PlusIcon;
+
   private readonly qualificationStore = inject(QualificationsStore);
 
   isModalOpen = signal(false);

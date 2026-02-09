@@ -3,14 +3,18 @@ import { EmployeeStore } from '../ems-employees/employee-store';
 import { EmployeeRequestDTO } from '../ems-employees/employee-service';
 import { QualificationsStore } from '../ems-qualifications/qualifications-store';
 import { QualificationGetDTO } from '../ems-qualifications/qualifications-service';
+import { LucideAngularModule, PlusIcon, XIcon } from 'lucide-angular';
 
 @Component({
   selector: 'app-ems-assign-qualifications',
-  imports: [],
+  imports: [LucideAngularModule],
   templateUrl: './ems-assign-qualifications.html',
   styleUrl: './ems-assign-qualifications.css',
 })
 export class EmsAssignQualifications implements OnInit {
+  readonly PlusIcon = PlusIcon;
+  readonly XIcon = XIcon;
+  
   // Use the store instead of direct service access
   readonly employeeStore = inject(EmployeeStore);
   readonly qualificationsStore = inject(QualificationsStore);

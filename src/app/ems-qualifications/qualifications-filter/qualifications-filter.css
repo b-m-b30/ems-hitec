@@ -64,7 +64,8 @@
 
 .textbox svg:not(.left) {
   right: 16px;
-  top: 15px;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
   pointer-events: auto;
 }
@@ -80,4 +81,51 @@
 .textbox input:disabled ~ svg {
   fill: #BCC1CA;
   pointer-events: none;
+}
+
+.icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  color: #565D6D;
+  transition: color 0.2s ease;
+  pointer-events: none;
+}
+
+.icon.left {
+  left: 16px;
+  top: 45%;
+  transform: translateY(-50%);
+}
+
+.textbox input:focus ~ .icon.left {
+  color: #6C73F5;
+}
+
+.textbox input:disabled ~ .icon {
+  color: #BCC1CA;
+  pointer-events: none;
+}
+
+.clear-button {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-icon {
+  color: #565D6D;
+  transition: color 0.2s ease;
+}
+
+.clear-button:hover .clear-icon {
+  color: #171A1F;
 }

@@ -4,14 +4,20 @@ import {QualificationsStore} from '../../ems-qualifications/qualifications-store
 import {EmployeeRequestDTO} from '../employee-service';
 import {Modal} from '../../modal/modal';
 import { environment } from '../../../environments/environment';
+import { LucideAngularModule, XIcon } from 'lucide-angular';
 
 @Component({
   selector: 'app-employee-create',
-  imports: [Modal],
+  imports: [
+    Modal,
+    LucideAngularModule
+  ],
   templateUrl: './employee-create.html',
   styleUrls: ['./employee-create.css'],
 })
 export class EmployeeCreate {
+  readonly XIcon = XIcon;
+
   private readonly store = inject(EmployeeStore);
   private readonly qualificationsStore = inject(QualificationsStore);
 

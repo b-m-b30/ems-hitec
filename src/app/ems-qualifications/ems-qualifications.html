@@ -1,7 +1,10 @@
 <h1>Qualifikationen Übersicht</h1>
 <div class="filter-actions">
     <app-qualifications-filter class="qualifications-filter"></app-qualifications-filter>
-    <button (click)="openModal()" class="add-qualification-button">Qualifikation hinzufügen</button>
+    <button (click)="openModal()" class="add-qualification-button">
+        <span class="add-qualification-text">Qualifikation hinzufügen</span>
+        <lucide-angular [img]="PlusIcon" class="add-qualification-icon" size="18px"></lucide-angular>
+    </button>
 </div>
 <app-qualifications-list></app-qualifications-list>
 

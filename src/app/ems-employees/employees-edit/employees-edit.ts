@@ -3,14 +3,20 @@ import { Modal } from "../../modal/modal";
 import { EmployeeStore } from '../employee-store';
 import { QualificationsStore } from '../../ems-qualifications/qualifications-store';
 import { EmployeeRequestPutDTO } from '../employee-service';
+import { LucideAngularModule, XIcon } from 'lucide-angular';
 
 @Component({
   selector: 'app-employees-edit',
-  imports: [Modal],
+  imports: [
+    Modal,
+    LucideAngularModule
+  ],
   templateUrl: './employees-edit.html',
   styleUrl: './employees-edit.css',
 })
 export class EmployeesEdit {
+  readonly XIcon = XIcon;
+
   private readonly store = inject(EmployeeStore);
   private readonly qualificationsStore = inject(QualificationsStore);
 

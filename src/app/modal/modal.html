@@ -1,7 +1,9 @@
 @if (isOpen()) {
     <div class="modal-overlay" (click)="onOverlayClick()">
         <div class="modal-content" (click)="$event.stopPropagation()">
-            <button class="modal-close" (click)="close.emit()">x</button>
+            <button class="modal-close" (click)="close.emit()">
+                <lucide-angular [img]="XIcon" size="20px"></lucide-angular>
+            </button>
             <h2 class="modal-title">{{title()}}</h2>
             <ng-content></ng-content>
         </div>

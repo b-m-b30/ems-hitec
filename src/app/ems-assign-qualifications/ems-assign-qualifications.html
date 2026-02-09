@@ -60,7 +60,7 @@
           @for (qual of availableQualifications(); track qual.id) {
             <li (click)="assignQualification(qual)" title="Hinzufügen">
               {{ qual.skill }}
-              <span class="action-icon">+</span>
+              <lucide-angular [img]="PlusIcon" class="action-icon" size="16px" />
             </li>
           }
         </ul>
@@ -81,7 +81,7 @@
           @for (qual of assignedQualifications(); track qual.id) {
             <li (click)="unassignQualification(qual)" title="Entfernen">
               {{ qual.skill }}
-              <span class="action-icon">&times;</span>
+              <lucide-angular [img]="XIcon" class="action-icon" size="16px" />
             </li>
           }
         </ul>

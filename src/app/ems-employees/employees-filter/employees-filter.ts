@@ -1,13 +1,17 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {EmployeeStore} from '../employee-store';
 import {QualificationsStore} from '../../ems-qualifications/qualifications-store';
+import { LucideAngularModule, RotateCcwIcon } from 'lucide-angular';
 
 @Component({
   selector: 'app-employees-filter',
+  imports: [LucideAngularModule],
   templateUrl: './employees-filter.html',
   styleUrl: './employees-filter.css',
 })
 export class EmployeesFilter implements OnInit {
+  readonly RotateCcwIcon = RotateCcwIcon;
+
   private readonly store = inject(EmployeeStore);
   private readonly qualificationsStore = inject(QualificationsStore);
 
