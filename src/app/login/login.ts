@@ -2,14 +2,18 @@ import { ChangeDetectionStrategy, Component, inject, signal, computed } from '@a
 import { Auth } from '../auth/auth';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { LucideAngularModule, DiamondIcon } from 'lucide-angular';
 
 @Component({
   selector: 'ems-login',
+  imports: [LucideAngularModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
+  readonly DiamondIcon = DiamondIcon;
+
   private readonly authService = inject(Auth);
   private readonly router = inject(Router);
 
