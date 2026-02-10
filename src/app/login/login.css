@@ -121,3 +121,31 @@
   line-height: 0;
   color: #fff;
 }
+
+.login-label {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 4px;
+  display: block;
+  transition: 0.2s;
+}
+
+.login-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  transition: border-color 0.2s;
+}
+
+.login-input:focus {
+  border-color: #6C73F5;
+  outline: none;
+}
+
+.login-label:has(+ .login-input:focus) {
+  color: #3c45f1;
+  transform: scale(1.02) translateY(-2px);
+}
