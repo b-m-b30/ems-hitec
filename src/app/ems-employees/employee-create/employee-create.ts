@@ -23,12 +23,16 @@ export class EmployeeCreate {
 
   isModalOpen = signal(false);
   isErrorModalOpen = signal(false);
+  isNewQualificationModalOpen = signal(false);
 
   firstName = signal('');
   lastName = signal('');
   city = signal('');
   qualifications = this.qualificationsStore.filteredQualifications;
   selectedQualifications = signal<{ id: number; skill: string }[]>([]);
+
+  newSkill = signal('');
+  newQualificationFormValid = computed(() => this.newSkill().trim().length > 0);
 
   firstNameValid = computed(() => this.firstName().trim().length > 0);
   lastNameValid = computed(() => this.lastName().trim().length > 0);
@@ -91,5 +95,20 @@ export class EmployeeCreate {
 
   isQualificationSelected(qId: number): boolean {
     return this.selectedQualifications().some(q => q.id === qId);
+  }
+
+  onSubmitNewQualification() {
+    this.qualificationsStore.create({ skill: this.newSkill() });
+    this.newSkill.set('');
+    this.closeNewQualificationModal();
+  }
+
+  openNewQualificationModal() {
+    this.isNewQualificationModalOpen.set(true);
+  }
+
+  closeNewQualificationModal() {
+    this.isNewQualificationModalOpen.set(false);
+    this.newSkill.set('');
   }
 }

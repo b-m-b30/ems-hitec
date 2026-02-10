@@ -47,6 +47,10 @@
           }
         </select>
       </div>
+
+      <button type="button" class="new-qualification-button" (click)="openNewQualificationModal()">
+        Neue Qualifikation erstellen
+      </button>
     </section>
 
     <div class="form-actions">
@@ -58,4 +62,20 @@
       <div class="employees-list-error">{{ errorMessage() }}</div>
     }
   </form>
+</app-modal>
+
+<app-modal [isOpen]="isNewQualificationModalOpen()" [title]="'Neue Qualifikation erstellen'" (close)="closeNewQualificationModal()">
+    <form class="new-qualification-form" (submit)="onSubmitNewQualification(); $event.preventDefault()">
+      <h3>Neue Qualifikation erstellen</h3>
+  
+      <div class="form-field">
+        <label for="newSkill">Qualifikation *</label>
+        <input id="newSkill" type="text" placeholder="Qualifikation" [value]="newSkill()" (input)="newSkill.set($any($event.target).value)" />
+      </div>
+  
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="closeNewQualificationModal()">Abbrechen</button>
+        <button type="submit" class="submit-button" [disabled]="!newQualificationFormValid()">Qualifikation erstellen</button>
+      </div>
+    </form>
 </app-modal>
